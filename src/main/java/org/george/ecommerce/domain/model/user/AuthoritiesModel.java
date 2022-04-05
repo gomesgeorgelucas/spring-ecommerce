@@ -1,4 +1,4 @@
-package org.george.ecommerce.domain.model;
+package org.george.ecommerce.domain.model.user;
 
 import javax.persistence.*;
 import java.util.Set;

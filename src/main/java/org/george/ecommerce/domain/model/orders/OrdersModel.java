@@ -1,6 +1,7 @@
-package org.george.ecommerce.domain.model;
+package org.george.ecommerce.domain.model.orders;
 
 import lombok.*;
+import org.george.ecommerce.domain.model.product.ProductsModel;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 

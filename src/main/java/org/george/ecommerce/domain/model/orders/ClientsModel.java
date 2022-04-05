@@ -1,7 +1,9 @@
-package org.george.ecommerce.domain.model;
+package org.george.ecommerce.domain.model.orders;
 
 
 import lombok.*;
+import org.george.ecommerce.domain.model.orders.OrdersModel;
+import org.george.ecommerce.domain.model.user.UsersModel;
 
 import javax.persistence.*;
 import java.util.Collection;

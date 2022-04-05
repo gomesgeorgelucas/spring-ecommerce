@@ -1,6 +1,8 @@
-package org.george.ecommerce.domain.model;
+package org.george.ecommerce.domain.model.product;
 
 import lombok.*;
+import org.george.ecommerce.domain.model.orders.OrdersModel;
+import org.george.ecommerce.domain.model.user.UsersModel;
 import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
@@ -39,12 +41,15 @@ public class ProductsModel {
     Collection<OrdersModel> productsOrdered;
 
     @ManyToMany
-    @JoinTable(name = "ec_product_categories_aux", joinColumns = @JoinColumn(name = "id_product"),
-            inverseJoinColumns = @JoinColumn(name = "id_product_category"))
+    @JoinTable(
+            name = "ec_category_products",
+            joinColumns = @JoinColumn(name="id_product"),
+            inverseJoinColumns = @JoinColumn(name = "id_product_category")
+    )
     Set<ProductCategoriesModel> productCategories;
 
     @ManyToOne
     @Lazy
     @JoinColumn(name = "id_product_creator_user", referencedColumnName = "id_user",nullable = false, updatable = false)
-    private UsersModel productCreator;
+    UsersModel productCreator;
 }
