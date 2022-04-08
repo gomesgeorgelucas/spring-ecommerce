@@ -1,12 +1,8 @@
-package org.george.ecommerce.domain.model.orders;
+package org.george.ecommerce.domain.model;
 
 import lombok.*;
-import org.george.ecommerce.domain.model.product.ProductsModel;
-import org.george.ecommerce.domain.model.user.UsersModel;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;

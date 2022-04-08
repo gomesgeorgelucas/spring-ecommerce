@@ -1,7 +1,8 @@
-package org.george.ecommerce.domain.model.user;
+package org.george.ecommerce.domain.model;
 
 import com.google.common.collect.Sets;
 import lombok.*;
+import org.george.ecommerce.domain.enums.UserRoleEnum;
 import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
@@ -19,17 +20,10 @@ public class RolesModel {
     @Column(name = "id_role")
     Long roleId;
     @Column(name = "name_role")
-    String roleName;
+    UserRoleEnum roleName;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(
-            name = "ec_role_authorities",
-            joinColumns = @JoinColumn(name="id_role"),
-            inverseJoinColumns = @JoinColumn(name = "id_authority")
-    )
-    Set<AuthoritiesModel> roleAuthorities = Sets.newHashSet();
-
-    @ManyToMany
+    @OneToMany
+    @Lazy
     @JoinTable(name = "ec_user_roles",
             joinColumns = @JoinColumn(name = "id_role"),
             inverseJoinColumns = @JoinColumn(name = "id_user")

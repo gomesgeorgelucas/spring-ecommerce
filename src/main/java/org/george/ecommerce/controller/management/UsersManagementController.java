@@ -2,7 +2,7 @@ package org.george.ecommerce.controller.management;
 
 import lombok.AllArgsConstructor;
 import org.george.ecommerce.domain.dto.user.UserDTO;
-import org.george.ecommerce.domain.model.user.UsersModel;
+import org.george.ecommerce.domain.model.UsersModel;
 import org.george.ecommerce.service.UsersService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,29 +19,29 @@ public class UsersManagementController {
 
     @GetMapping()
     public ResponseEntity<Page<UserDTO>> getUsers(Pageable pageable) {
-        Page<UserDTO> page = usersService.getUsers(pageable);
+        Page<UserDTO> page = usersService.getAllUsers(pageable);
         return ResponseEntity.ok().body(page);
     }
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserDTO> getUsers(@PathVariable("userId") Long userId) {
-        return ResponseEntity.ok().body(usersService.getUsers(userId));
+        return ResponseEntity.ok().body(usersService.getUserById(userId));
     }
 
     @PostMapping()
-    public ResponseEntity<UsersModel> save(@RequestBody @Valid UserDTO user) {
-        return ResponseEntity.ok().body(usersService.save(user));
+    public ResponseEntity<UsersModel> save(@RequestBody @Valid UserDTO userDTO) {
+        return ResponseEntity.ok().body(usersService.createUser(userDTO));
     }
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<String> delete(@PathVariable("userId") Long userId) {
-        usersService.delete(userId);
+    @DeleteMapping()
+    public ResponseEntity<String> delete(@RequestBody UserDTO userDTO) {
+        usersService.deleteUser(userDTO);
         return ResponseEntity.ok().body("Deleted");
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<String> update(@PathVariable("userId") Long userId, @RequestBody UserDTO user) {
-        usersService.update(userId, user);
+    public ResponseEntity<String> update(@PathVariable("userId") Long userId, @RequestBody UserDTO userDTO) {
+        usersService.updateUser(userId, userDTO);
         return ResponseEntity.ok().body("Updated!");
     }
 }

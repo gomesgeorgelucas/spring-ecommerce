@@ -2,7 +2,7 @@ package org.george.ecommerce.service;
 
 import lombok.AllArgsConstructor;
 import org.george.ecommerce.domain.dto.user.UserDTO;
-import org.george.ecommerce.domain.model.user.UsersModel;
+import org.george.ecommerce.domain.model.UsersModel;
 import org.george.ecommerce.exception.InvalidRequestException;
 import org.george.ecommerce.repository.UsersRepository;
 import org.modelmapper.Conditions;
@@ -19,12 +19,13 @@ import java.util.function.Function;
 
 @AllArgsConstructor
 @Service
-public class UsersService {
+public class UsersService implements IUsersService {
     final UsersRepository usersRepository;
     final ModelMapper modelMapper = new ModelMapper();
 
     @Transactional
-    public Page<UserDTO> getUsers(Pageable pageable) {
+    @Override
+    public Page<UserDTO> getAllUsers(Pageable pageable) {
         Page<UsersModel> pageUsersModel = usersRepository.findAll(pageable);
         Page<UserDTO> pageUserDTO = pageUsersModel.map(new Function<UsersModel, UserDTO>() {
             @Override
@@ -39,7 +40,8 @@ public class UsersService {
     }
 
     @Transactional
-    public UserDTO getUsers(Long userId) {
+    @Override
+    public UserDTO getUserById(Long userId) {
         if (!usersRepository.existsById(userId)) {
             throw new InvalidRequestException();
         }
@@ -49,18 +51,15 @@ public class UsersService {
     }
 
     @Transactional
-    public UsersModel save(UserDTO userDTO) {
+    @Override
+    public UsersModel createUser(UserDTO userDTO) {
         UsersModel userToPersist = modelMapper.map(userDTO, UsersModel.class);
         return usersRepository.save(userToPersist);
     }
 
     @Transactional
-    public void delete(Long userId) {
-        usersRepository.deleteById(userId);
-    }
-
-    @Transactional
-    public UsersModel update(Long userId, UserDTO userDTO) {
+    @Override
+    public UsersModel updateUser(Long userId, UserDTO userDTO) {
         if (!usersRepository.existsById(userId)) {
             throw new NotFoundException("User not found");
         }
@@ -75,4 +74,17 @@ public class UsersService {
         modelMapper.map(userDTO, stored);
         return usersRepository.save(stored);
     }
+
+    @Transactional
+    @Override
+    public void deleteUser(UserDTO userDTO)
+    {
+        if (usersRepository.findByUserLogin(userDTO.getUserLogin()).isEmpty()) {
+            throw new NotFoundException("User not found");
+        }
+        UsersModel usersModel = usersRepository.findByUserLogin(userDTO.getUserLogin()).get();
+        usersRepository.deleteById(usersModel.getUserId());
+    }
+
+
 }

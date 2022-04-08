@@ -1,11 +1,9 @@
-package org.george.ecommerce.domain.model.user;
+package org.george.ecommerce.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Sets;
 import lombok.*;
-import org.george.ecommerce.domain.enums.UserRoleEnum;
-import org.george.ecommerce.domain.model.orders.OrdersModel;
-import org.springframework.context.annotation.Lazy;
+import org.george.ecommerce.domain.model.OrdersModel;
+import org.george.ecommerce.domain.model.RolesModel;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -31,8 +29,6 @@ public class UsersModel {
     String userLogin;
     @Column(name = "passwd_user", nullable = false)
     String userPassword;
-    @Column(name = "role_user", nullable = false)
-    UserRoleEnum userRole;
 
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
@@ -41,5 +37,12 @@ public class UsersModel {
             inverseJoinColumns = @JoinColumn(name = "id_order")
     )
     Collection<OrdersModel> userOrders = Sets.newHashSet();
+
+    @ManyToOne
+    @JoinTable(name = "ec_user_roles",
+            joinColumns = @JoinColumn(name = "id_user"),
+            inverseJoinColumns = @JoinColumn(name = "id_role")
+    )
+    RolesModel userRole;
 
 }

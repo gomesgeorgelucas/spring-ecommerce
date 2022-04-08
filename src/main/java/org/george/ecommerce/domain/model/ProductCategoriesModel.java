@@ -1,4 +1,4 @@
-package org.george.ecommerce.domain.model.product;
+package org.george.ecommerce.domain.model;
 
 import com.google.common.collect.Sets;
 import lombok.*;

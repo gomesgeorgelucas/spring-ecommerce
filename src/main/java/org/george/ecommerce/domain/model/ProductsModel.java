@@ -1,10 +1,7 @@
-package org.george.ecommerce.domain.model.product;
+package org.george.ecommerce.domain.model;
 
 import com.google.common.collect.Sets;
 import lombok.*;
-import org.george.ecommerce.domain.model.orders.OrdersModel;
-import org.george.ecommerce.domain.model.user.UsersModel;
-import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
