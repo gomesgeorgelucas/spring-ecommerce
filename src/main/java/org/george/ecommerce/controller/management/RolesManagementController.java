@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("/management/api/store/roles")
@@ -20,13 +22,13 @@ public class RolesManagementController {
     }
 
     @PostMapping
-    public ResponseEntity<RolesModel> createRole(RolesModel role) {
+    public ResponseEntity<RolesModel> createRole(@Valid @RequestBody RolesModel role) {
         return ResponseEntity.ok().body(rolesService.createRole(role));
     }
 
     @DeleteMapping
-    public ResponseEntity<String> deleteRole(RolesModel rolesModel) {
-        rolesService.deleteRole(rolesModel);
+    public ResponseEntity<String> deleteRole(@Valid @RequestBody RolesModel role) {
+        rolesService.deleteRole(role);
         return ResponseEntity.ok().body("Deleted");
     }
 }

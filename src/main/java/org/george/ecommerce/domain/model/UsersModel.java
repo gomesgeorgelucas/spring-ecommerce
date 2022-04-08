@@ -1,12 +1,11 @@
 package org.george.ecommerce.domain.model;
 
-import com.google.common.collect.Sets;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.george.ecommerce.domain.model.OrdersModel;
-import org.george.ecommerce.domain.model.RolesModel;
 
 import javax.persistence.*;
-import java.util.Collection;
+import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,18 +29,21 @@ public class UsersModel {
     @Column(name = "passwd_user", nullable = false)
     String userPassword;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany
     @JoinTable(
             name = "ec_user_orders",
             joinColumns = @JoinColumn(name="id_user"),
             inverseJoinColumns = @JoinColumn(name = "id_order")
     )
-    Collection<OrdersModel> userOrders = Sets.newHashSet();
+    @JsonIgnore
+    Set<OrdersModel> userOrders;
 
-    @ManyToOne
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(name = "ec_user_roles",
             joinColumns = @JoinColumn(name = "id_user"),
-            inverseJoinColumns = @JoinColumn(name = "id_role")
+            inverseJoinColumns = @JoinColumn(name = "id_role",
+            nullable = false)
     )
     RolesModel userRole;
 

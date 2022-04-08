@@ -1,5 +1,6 @@
 package org.george.ecommerce.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -37,7 +38,7 @@ public class OrdersModel {
             joinColumns = @JoinColumn(name="id_order"),
             inverseJoinColumns = @JoinColumn(name = "id_product")
     )
-    Collection<ProductsModel> orderedProducts = new ArrayList<>();
+    Collection<ProductsModel> orderedProducts;
 
     @ManyToMany
     @JoinTable(
@@ -45,5 +46,6 @@ public class OrdersModel {
             joinColumns = @JoinColumn(name="id_order"),
             inverseJoinColumns = @JoinColumn(name = "id_user")
     )
-    Collection<UsersModel> orderUsers = new ArrayList<>();
+    @JsonIgnore
+    Collection<UsersModel> orderUsers;
 }

@@ -10,5 +10,5 @@ public enum OrderStatusEnum {
     SHIPPED ("Order Shipped"),
     COMPLETED ("Order completed");
 
-    String status;
+    final String status;
 }

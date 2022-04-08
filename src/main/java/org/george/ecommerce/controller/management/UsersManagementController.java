@@ -1,7 +1,6 @@
 package org.george.ecommerce.controller.management;
 
 import lombok.AllArgsConstructor;
-import org.george.ecommerce.domain.dto.user.UserDTO;
 import org.george.ecommerce.domain.model.UsersModel;
 import org.george.ecommerce.service.UsersService;
 import org.springframework.data.domain.Page;
@@ -18,30 +17,39 @@ public class UsersManagementController {
     final UsersService usersService;
 
     @GetMapping()
-    public ResponseEntity<Page<UserDTO>> getUsers(Pageable pageable) {
-        Page<UserDTO> page = usersService.getAllUsers(pageable);
-        return ResponseEntity.ok().body(page);
+    public ResponseEntity<Page<UsersModel>> getAllUsers(Pageable pageable) {
+        return ResponseEntity.ok().body(usersService.getAllUsers(pageable));
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<UserDTO> getUsers(@PathVariable("userId") Long userId) {
-        return ResponseEntity.ok().body(usersService.getUserById(userId));
+    @GetMapping("/login/{login}")
+    public ResponseEntity<UsersModel> getUserByUserLogin(@Valid @PathVariable("login") String userLogin) {
+        return ResponseEntity.ok().body(usersService.getUserByUserLogin(userLogin));
+    }
+
+    @GetMapping("/id/{userId}")
+    public ResponseEntity<UsersModel> getUserByUserId(@Valid @PathVariable("userId") Long userId) {
+        return ResponseEntity.ok().body(usersService.getUserByUserId(userId));
     }
 
     @PostMapping()
-    public ResponseEntity<UsersModel> save(@RequestBody @Valid UserDTO userDTO) {
-        return ResponseEntity.ok().body(usersService.createUser(userDTO));
+    public ResponseEntity<UsersModel> createUser( @Valid @RequestBody UsersModel usersModel) {
+        return ResponseEntity.ok().body(usersService.createUser(usersModel));
+    }
+
+    @PutMapping("/id/{userId}")
+    public ResponseEntity<UsersModel> updateUser(@PathVariable("userId") Long userId,@Valid @RequestBody UsersModel usersModel) {
+        return ResponseEntity.ok().body(usersService.updateUser(userId, usersModel));
     }
 
     @DeleteMapping()
-    public ResponseEntity<String> delete(@RequestBody UserDTO userDTO) {
-        usersService.deleteUser(userDTO);
+    public ResponseEntity<String> deleteUser(@Valid @RequestBody UsersModel usersModel) {
+        usersService.deleteUser(usersModel);
         return ResponseEntity.ok().body("Deleted");
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<String> update(@PathVariable("userId") Long userId, @RequestBody UserDTO userDTO) {
-        usersService.updateUser(userId, userDTO);
-        return ResponseEntity.ok().body("Updated!");
+    @DeleteMapping("/id/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable("userId") Long userId) {
+        usersService.deleteUserByUserId(userId);
+        return ResponseEntity.ok().body("Deleted");
     }
 }

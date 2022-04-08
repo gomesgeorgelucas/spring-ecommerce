@@ -1,11 +1,11 @@
 package org.george.ecommerce.domain.model;
 
-import com.google.common.collect.Sets;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
@@ -37,17 +37,24 @@ public class ProductsModel {
             joinColumns = @JoinColumn(name="id_product"),
             inverseJoinColumns = @JoinColumn(name = "id_order")
     )
-    Collection<OrdersModel> productsOrdered = new ArrayList<>();
+    @JsonIgnore
+    Collection<OrdersModel> productsOrdered;
 
+    @NotNull
     @ManyToMany
     @JoinTable(
             name = "ec_category_products",
             joinColumns = @JoinColumn(name="id_product"),
             inverseJoinColumns = @JoinColumn(name = "id_product_category")
     )
-    Set<ProductCategoriesModel> productCategories = Sets.newHashSet();
+    Set<ProductCategoriesModel> productCategories;
 
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = "id_product_creator_user", referencedColumnName = "id_user",nullable = false, updatable = false)
+    @JoinColumn(
+            name = "id_product_creator_user",
+            referencedColumnName = "id_user",
+            nullable = false,
+            updatable = false)
     UsersModel productCreator;
 }

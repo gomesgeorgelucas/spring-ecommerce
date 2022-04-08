@@ -1,6 +1,7 @@
 package org.george.ecommerce.service;
 
 import lombok.AllArgsConstructor;
+import org.george.ecommerce.domain.enums.UserRoleEnum;
 import org.george.ecommerce.domain.model.RolesModel;
 import org.george.ecommerce.repository.RolesRepository;
 import org.springframework.data.domain.Page;
@@ -25,10 +26,20 @@ public class RolesService implements IRolesService{
 
     @Override
     public void deleteRole(RolesModel role) {
-        if (rolesRepository.findByRoleName(role.getRoleName().name()).isEmpty()) {
+        if (rolesRepository.findByRoleName(role.getRoleName()).isEmpty()) {
             throw new NotFoundException("Role not found");
         }
 
-        rolesRepository.delete(role);
+        RolesModel rolesModel = rolesRepository.findByRoleName(role.getRoleName()).get();
+
+        rolesRepository.delete(rolesModel);
+    }
+
+    @Override
+    public RolesModel getRoleByName(UserRoleEnum roleEnum) {
+        if (rolesRepository.findByRoleName(roleEnum).isEmpty()) {
+            throw new NotFoundException("Role not found");
+        }
+        return rolesRepository.findByRoleName(roleEnum).get();
     }
 }

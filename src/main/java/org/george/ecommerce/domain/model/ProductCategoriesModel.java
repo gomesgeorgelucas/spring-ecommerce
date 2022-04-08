@@ -1,5 +1,6 @@
 package org.george.ecommerce.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Sets;
 import lombok.*;
 
@@ -27,7 +28,8 @@ public class ProductCategoriesModel {
             joinColumns = @JoinColumn(name="id_product_category"),
             inverseJoinColumns = @JoinColumn(name = "id_product")
     )
-    Set<ProductsModel> categoryProducts = Sets.newHashSet();
+    @JsonIgnore
+    Set<ProductsModel> categoryProducts;
 
 
 }

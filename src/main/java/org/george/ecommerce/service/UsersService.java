@@ -1,90 +1,82 @@
 package org.george.ecommerce.service;
 
 import lombok.AllArgsConstructor;
-import org.george.ecommerce.domain.dto.user.UserDTO;
+import org.george.ecommerce.domain.model.RolesModel;
 import org.george.ecommerce.domain.model.UsersModel;
-import org.george.ecommerce.exception.InvalidRequestException;
 import org.george.ecommerce.repository.UsersRepository;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.webjars.NotFoundException;
-
-import java.util.Optional;
-import java.util.function.Function;
-
 
 @AllArgsConstructor
 @Service
 public class UsersService implements IUsersService {
     final UsersRepository usersRepository;
+    final RolesService rolesService;
     final ModelMapper modelMapper = new ModelMapper();
 
-    @Transactional
     @Override
-    public Page<UserDTO> getAllUsers(Pageable pageable) {
-        Page<UsersModel> pageUsersModel = usersRepository.findAll(pageable);
-        Page<UserDTO> pageUserDTO = pageUsersModel.map(new Function<UsersModel, UserDTO>() {
-            @Override
-            public UserDTO apply(UsersModel usersModel) {
-                UserDTO userDTO = new UserDTO();
-                modelMapper.map(usersModel, userDTO);
-                return userDTO;
-            }
-        });
-
-        return pageUserDTO ;
+    public Page<UsersModel> getAllUsers(Pageable pageable) {
+       return usersRepository.findAll(pageable);
     }
 
-    @Transactional
     @Override
-    public UserDTO getUserById(Long userId) {
-        if (!usersRepository.existsById(userId)) {
-            throw new InvalidRequestException();
+    public UsersModel getUserByUserId(Long userId) {
+        if (usersRepository.findById(userId).isEmpty()) {
+            throw new NotFoundException("Not found");
         }
-        UserDTO userDTO = new UserDTO();
-        modelMapper.map(usersRepository.getById(userId),  userDTO);
-        return userDTO;
+
+        UsersModel stored = usersRepository.findById(userId).get();
+        return stored;
     }
 
-    @Transactional
     @Override
-    public UsersModel createUser(UserDTO userDTO) {
-        UsersModel userToPersist = modelMapper.map(userDTO, UsersModel.class);
-        return usersRepository.save(userToPersist);
+    public UsersModel getUserByUserLogin(String userLogin) {
+        if (usersRepository.findByUserLogin(userLogin).isEmpty()) {
+            throw new NotFoundException("User not found");
+        }
+        UsersModel stored = usersRepository.findByUserLogin(userLogin).get();
+        return stored;
     }
 
-    @Transactional
     @Override
-    public UsersModel updateUser(Long userId, UserDTO userDTO) {
-        if (!usersRepository.existsById(userId)) {
+    public UsersModel createUser(UsersModel usersModel) {
+        RolesModel userRole = rolesService.getRoleByName(usersModel.getUserRole().getRoleName());
+        usersModel.setUserRole(userRole);
+        return usersRepository.save(usersModel);
+    }
+
+    @Override
+    public UsersModel updateUser(Long userId, UsersModel usersModel) {
+        if (usersRepository.findById(userId).isEmpty()) {
             throw new NotFoundException("User not found");
         }
 
-        Optional<UsersModel> optional = usersRepository.findById(userId);
-        if (!optional.isPresent()) {
-            throw new InvalidRequestException();
-        }
-
-        UsersModel stored = optional.get();
+        UsersModel stored = usersRepository.findById(userId).get();
         modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
-        modelMapper.map(userDTO, stored);
+        modelMapper.map(usersModel, stored);
         return usersRepository.save(stored);
     }
 
-    @Transactional
     @Override
-    public void deleteUser(UserDTO userDTO)
+    public void deleteUser(UsersModel usersModel)
     {
-        if (usersRepository.findByUserLogin(userDTO.getUserLogin()).isEmpty()) {
+        if (usersRepository.findByUserLogin(usersModel.getUserLogin()).isEmpty()) {
             throw new NotFoundException("User not found");
         }
-        UsersModel usersModel = usersRepository.findByUserLogin(userDTO.getUserLogin()).get();
-        usersRepository.deleteById(usersModel.getUserId());
+        UsersModel stored = usersRepository.findByUserLogin(usersModel.getUserLogin()).get();
+        usersRepository.deleteById(stored.getUserId());
     }
 
-
+    @Override
+    public void deleteUserByUserId(Long userId) {
+        if (usersRepository.findById(userId).isEmpty()) {
+            throw new NotFoundException("User not found");
+        }
+        UsersModel stored = usersRepository.findById(userId).get();
+        usersRepository.deleteById(stored.getUserId());
+    }
 }
