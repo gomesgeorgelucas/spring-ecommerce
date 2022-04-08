@@ -1,5 +1,6 @@
 package org.george.ecommerce.domain.model.product;
 
+import com.google.common.collect.Sets;
 import lombok.*;
 import org.george.ecommerce.domain.model.orders.OrdersModel;
 import org.george.ecommerce.domain.model.user.UsersModel;
@@ -7,6 +8,7 @@ import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
@@ -38,7 +40,7 @@ public class ProductsModel {
             joinColumns = @JoinColumn(name="id_product"),
             inverseJoinColumns = @JoinColumn(name = "id_order")
     )
-    Collection<OrdersModel> productsOrdered;
+    Collection<OrdersModel> productsOrdered = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -46,10 +48,9 @@ public class ProductsModel {
             joinColumns = @JoinColumn(name="id_product"),
             inverseJoinColumns = @JoinColumn(name = "id_product_category")
     )
-    Set<ProductCategoriesModel> productCategories;
+    Set<ProductCategoriesModel> productCategories = Sets.newHashSet();
 
     @ManyToOne
-    @Lazy
     @JoinColumn(name = "id_product_creator_user", referencedColumnName = "id_user",nullable = false, updatable = false)
     UsersModel productCreator;
 }

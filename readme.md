@@ -23,6 +23,10 @@
 - deslogado
   - deverão visualizar apenas home
 
+***Filtros por categoria: deve ser feito usando projections, retornando DTOs e utilizando interfaces***
+***Service deve ter interface e implementação***
+***Utilizar apenas roles!!!***
+
 **MODELAGEM**
  - [ ] TODO
 ### Dependencies:
@@ -32,7 +36,7 @@
   - Data JPA
     - pagination
     - sorting
-    - filtering
+    - filtering (specifications)
   - PostgreSQL
   - WEB
   - Security

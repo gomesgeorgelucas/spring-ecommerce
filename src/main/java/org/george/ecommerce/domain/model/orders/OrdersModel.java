@@ -2,11 +2,15 @@ package org.george.ecommerce.domain.model.orders;
 
 import lombok.*;
 import org.george.ecommerce.domain.model.product.ProductsModel;
+import org.george.ecommerce.domain.model.user.UsersModel;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @AllArgsConstructor
@@ -28,7 +32,7 @@ public class OrdersModel {
     @Column(name = "updated_order")
     ZonedDateTime orderUpdated;
 
-    @Column(name = "status_order")
+    @Column(name = "status_order", nullable = false)
     String orderStatus;
 
     @ManyToMany
@@ -37,13 +41,13 @@ public class OrdersModel {
             joinColumns = @JoinColumn(name="id_order"),
             inverseJoinColumns = @JoinColumn(name = "id_product")
     )
-    Collection<ProductsModel> orderedProducts;
+    Collection<ProductsModel> orderedProducts = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
-            name = "ec_client_orders",
+            name = "ec_user_orders",
             joinColumns = @JoinColumn(name="id_order"),
-            inverseJoinColumns = @JoinColumn(name = "id_client")
+            inverseJoinColumns = @JoinColumn(name = "id_user")
     )
-    Collection<ClientsModel> clients;
+    Collection<UsersModel> orderUsers = new ArrayList<>();
 }

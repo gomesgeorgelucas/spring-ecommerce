@@ -1,5 +1,6 @@
 package org.george.ecommerce.domain.model.product;
 
+import com.google.common.collect.Sets;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,7 +27,7 @@ public class ProductCategoriesModel {
             joinColumns = @JoinColumn(name="id_product_category"),
             inverseJoinColumns = @JoinColumn(name = "id_product")
     )
-    Set<ProductsModel> categoryProducts;
+    Set<ProductsModel> categoryProducts = Sets.newHashSet();
 
 
 }

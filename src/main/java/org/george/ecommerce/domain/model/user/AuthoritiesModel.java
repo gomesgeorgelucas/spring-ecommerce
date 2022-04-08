@@ -1,5 +1,8 @@
 package org.george.ecommerce.domain.model.user;
 
+import com.google.common.collect.Sets;
+import org.springframework.context.annotation.Lazy;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -18,7 +21,7 @@ public class AuthoritiesModel {
             joinColumns = @JoinColumn(name="id_authority"),
             inverseJoinColumns = @JoinColumn(name = "id_role")
     )
-    Set<RolesModel> authorizedRoles;
+    Set<RolesModel> authorizedRoles = Sets.newHashSet();
 
 
 }
