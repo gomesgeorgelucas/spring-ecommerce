@@ -29,7 +29,7 @@ public class OrdersManagementController {
         return ResponseEntity.ok().body(ordersService.createProduct(ordersModel));
     }
 
-    @PutMapping("/name/{orderId}")
+    @PutMapping("/id/{orderId}")
     public ResponseEntity<?> updateOrder(
             @PathVariable("orderId") Long orderId,
             @RequestBody OrdersModel ordersModel) {

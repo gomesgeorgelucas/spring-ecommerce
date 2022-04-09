@@ -1,8 +1,6 @@
 package org.george.ecommerce.service;
 
 import lombok.AllArgsConstructor;
-import org.aspectj.weaver.ast.Or;
-import org.george.ecommerce.domain.enums.OrderStatusEnum;
 import org.george.ecommerce.domain.model.OrdersModel;
 import org.george.ecommerce.domain.model.ProductsModel;
 import org.george.ecommerce.domain.model.UsersModel;
@@ -10,6 +8,7 @@ import org.george.ecommerce.repository.OrdersRepository;
 import org.george.ecommerce.repository.ProductsRepository;
 import org.george.ecommerce.repository.UsersRepository;
 import org.george.ecommerce.service.interfaces.IOrdersService;
+import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -70,11 +69,20 @@ public class OrdersServiceImpl implements IOrdersService {
 
     @Override
     public OrdersModel updateOrder(Long orderId, OrdersModel ordersModel) {
-        return null;
+        if (ordersRepository.findById(orderId).isEmpty()) {
+            throw new NotFoundException("Order not found");
+        }
+        OrdersModel storedOrder = ordersRepository.findById(orderId).get();
+        modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+        modelMapper.map(ordersModel, storedOrder);
+        return ordersRepository.save(storedOrder);
     }
 
     @Override
     public void deleteOrderById(Long orderId) {
-
+        if (ordersRepository.findById(orderId).isEmpty()) {
+            throw new NotFoundException("Order not found");
+        }
+        ordersRepository.deleteById(orderId);
     }
 }
