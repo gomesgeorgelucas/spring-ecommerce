@@ -33,9 +33,9 @@ public class OrdersModel {
     @Enumerated(EnumType.STRING)
     OrderStatusEnum orderStatus;
 
-    @ManyToMany
+    @ManyToMany (fetch = FetchType.EAGER)
     @JoinTable(
-            name = "ec_orders",
+            name = "ec_ordered_products",
             joinColumns = @JoinColumn(name="id_order"),
             inverseJoinColumns = @JoinColumn(name = "id_product")
     )
@@ -47,6 +47,5 @@ public class OrdersModel {
             joinColumns = @JoinColumn(name="id_order"),
             inverseJoinColumns = @JoinColumn(name = "id_user")
     )
-    @JsonIgnore
     UsersModel orderUser;
 }

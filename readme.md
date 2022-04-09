@@ -1,6 +1,12 @@
 ## e-Commerce Spring Boot Project
 
+powered By: Infected Mushroom - Saeed ;)
+
 ## Specs
+**GENERAL**
+  - Only roles are used, no authorities at this point.
+  - Filter uses Data JPA Specification
+
 **USER**
 
 - logado:
@@ -23,13 +29,10 @@
 - deslogado
   - deverão visualizar apenas home
 
-***Filtros por categoria: deve ser feito usando projections, retornando DTOs e utilizando interfaces***
-***Service deve ter interface e implementação***
-***Utilizar apenas roles!!!***
+**ER Diagram**
 
-- [ ] ORM.xml namedQuery
-**MODELAGEM**
- - [ ] TODO
+![ERD](src/main/resources/static/ERD.webp?raw=true "ERD")
+
 ### Dependencies:
 - Java 17
 - Lombok
@@ -42,5 +45,10 @@
   - WEB
   - Security
     - JWT
+
 ### Extra-credit
+- [ ] remover @Query dos repositories e colocar no ORM.xml namedQuery    
 - [ ] Campo de busca de produto com sugestões
+- [ ] Cancel Order -- All orders must keep registerer!
+- [ ] FrontPage
+- [ ] Texto das exceções deve ficar em arquivo separado ou constante (Classe separada)
