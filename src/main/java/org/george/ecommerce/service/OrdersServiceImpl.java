@@ -17,6 +17,7 @@ import org.webjars.NotFoundException;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import static org.george.ecommerce.domain.enums.OrderStatusEnum.*;
 
@@ -36,21 +37,26 @@ public class OrdersServiceImpl implements IOrdersService {
         return ordersRepository.findAll(pageable);
     }
 
+    @Transactional
     @Override
     public OrdersModel getOrderById(Long orderId) {
         if (ordersRepository.findById(orderId).isEmpty()) {
             throw new NotFoundException("Order not found");
         }
         OrdersModel ordersModel = ordersRepository.findById(orderId).get();
+        Collection<ProductsModel> orderedProducts = ordersModel.getOrderedProducts();
         return ordersModel;
     }
 
+    //TODO - Fazer loop para inserir a quantidade de elementos no product ordered e calcular a quantidade iterando quando puxar a ordem (cancelar)
+    //TODO - Não armazena quantidade, então tem que contar todos os produtos e depois atualizar na hora de enviar
     @Override
     @Transactional
     public OrdersModel createOrder(OrdersModel ordersModel) {
         if (usersRepository.findByUserLogin(ordersModel.getOrderUser().getUserLogin()).isEmpty()) {
             throw new NotFoundException("User not found");
         }
+
         UsersModel orderCreator = usersRepository.findByUserLogin(ordersModel.getOrderUser().getUserLogin()).get();
         ArrayList<ProductsModel> shoppingCart = new ArrayList<>();
         for (ProductsModel product : ordersModel.getOrderedProducts()) {
@@ -71,7 +77,8 @@ public class OrdersServiceImpl implements IOrdersService {
                 .orderUser(orderCreator)
                 .build();
 
-        OrdersModel orderCreated = ordersRepository.saveAndFlush(newOrder);
+        OrdersModel orderCreated = ordersRepository.save(newOrder);
+
 
         for (ProductsModel product : shoppingCart) {
             ProductsModel productToUpdate = productsRepository.findById(product.getProductId()).get();
@@ -81,6 +88,10 @@ public class OrdersServiceImpl implements IOrdersService {
             } else {
                 productToUpdate.setProductQuantity(EMPTY_STOCK);
             }
+            if (productToUpdate.getProductsOrdered() == null) {
+                productToUpdate.setProductsOrdered(new ArrayList<>());
+            }
+            productToUpdate.getProductsOrdered().add(orderCreated);
             productsRepository.save(productToUpdate);
         }
 
@@ -103,6 +114,8 @@ public class OrdersServiceImpl implements IOrdersService {
         if (ordersRepository.findById(orderId).isEmpty()) {
             throw new NotFoundException("Order not found");
         }
+
+        Collection<ProductsModel> orderedProducts = ordersRepository.findById(orderId).get().getOrderedProducts();
 
         OrdersModel orderToCancel = ordersRepository.findById(orderId).get();
         if (orderToCancel.getOrderStatus() != COMPLETED

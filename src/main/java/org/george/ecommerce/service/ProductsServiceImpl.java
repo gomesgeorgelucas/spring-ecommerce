@@ -1,9 +1,9 @@
 package org.george.ecommerce.service;
 
 import lombok.AllArgsConstructor;
-import org.george.ecommerce.domain.dto.ProductCategoryDTO;
 import org.george.ecommerce.domain.model.ProductsModel;
 import org.george.ecommerce.domain.model.UsersModel;
+import org.george.ecommerce.domain.views.ProductCategoriesModelView;
 import org.george.ecommerce.repository.ProductsRepository;
 import org.george.ecommerce.repository.UsersRepository;
 import org.george.ecommerce.repository.specification.ProductsSpecification;
@@ -27,7 +27,7 @@ public class ProductsServiceImpl implements IProductsService {
 
 
     @Override
-    public Page<ProductCategoryDTO> findByProductAndCategory(Pageable pageable) {
+    public Page<ProductCategoriesModelView> findByProductAndCategory(Pageable pageable) {
         return productsRepository.findByProductAndCategory(pageable);
     }
 

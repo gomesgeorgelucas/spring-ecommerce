@@ -9,8 +9,10 @@ public interface IUsersService {
     UsersModel getUserByUserId(Long userId);
     UsersModel getUserByUserLogin(String userLogin);
     UsersModel createUser(UsersModel usersModel);
-    UsersModel updateUser(Long id, UsersModel usersModel);
+    UsersModel updateUser(Long userId, UsersModel usersModel);
+    UsersModel updateRegularUser(String userLogin, UsersModel usersModel);
     void deleteUser(UsersModel usersModel);
     void deleteUserByUserId(Long userId);
     void deleteUserByUserLogin(String userLogin);
+    UsersModel createRegularUser(UsersModel usersModel);
 }

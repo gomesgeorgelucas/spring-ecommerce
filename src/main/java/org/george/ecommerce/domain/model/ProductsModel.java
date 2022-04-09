@@ -20,7 +20,7 @@ public class ProductsModel {
     @Column(name = "id_product")
     Long productId;
 
-    @Column(name = "name_product", nullable = false)
+    @Column(name = "name_product", unique = true, nullable = false)
     String productName;
     @Column(name = "description_product")
     String productDescription;

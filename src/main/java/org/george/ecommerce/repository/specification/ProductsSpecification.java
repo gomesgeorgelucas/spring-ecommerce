@@ -1,6 +1,5 @@
 package org.george.ecommerce.repository.specification;
 
-import org.george.ecommerce.domain.dto.ProductDTO;
 import org.george.ecommerce.domain.model.ProductsModel;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;

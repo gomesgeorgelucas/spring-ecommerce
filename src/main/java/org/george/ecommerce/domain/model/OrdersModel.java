@@ -33,7 +33,7 @@ public class OrdersModel {
     @Enumerated(EnumType.STRING)
     OrderStatusEnum orderStatus;
 
-    @ManyToMany (fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
             name = "ec_ordered_products",
             joinColumns = @JoinColumn(name="id_order"),

@@ -1,8 +1,8 @@
 package org.george.ecommerce.controller.store;
 
 import lombok.AllArgsConstructor;
-import org.george.ecommerce.domain.dto.ProductCategoryDTO;
 import org.george.ecommerce.domain.model.ProductsModel;
+import org.george.ecommerce.domain.views.ProductCategoriesModelView;
 import org.george.ecommerce.service.ProductsServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,9 +38,9 @@ public class ProductsController {
     }
 
     //TODO - fix Query when Categories available
-    @GetMapping("/category/")
-    public Page<ProductCategoryDTO> findByProductAndCategory(Pageable pageable){
-        return productsService.findByProductAndCategory(pageable);
+    @GetMapping("/category")
+    public ResponseEntity<Page<ProductCategoriesModelView>> findProductsModelsByProductNameAndAndProductCategories(Pageable pageable){
+        return ResponseEntity.ok().body(productsService.findByProductAndCategory(pageable));
     }
 
     @GetMapping("/search")

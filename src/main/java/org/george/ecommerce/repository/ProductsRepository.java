@@ -1,7 +1,7 @@
 package org.george.ecommerce.repository;
 
-import org.george.ecommerce.domain.dto.ProductCategoryDTO;
 import org.george.ecommerce.domain.model.ProductsModel;
+import org.george.ecommerce.domain.views.ProductCategoriesModelView;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,7 +18,6 @@ public interface ProductsRepository extends JpaRepository<ProductsModel, Long>, 
                     "    inner join ec_category_products as pc on p.id_product = pc.id_product " +
                     "    inner join ec_product_categories as pca on pca.id_product_category = pc.id_product_category ", nativeQuery = true
     )
-    Page<ProductCategoryDTO> findByProductAndCategory(Pageable pageable);
-
+    Page<ProductCategoriesModelView> findByProductAndCategory(Pageable pageable);
     Optional<ProductsModel> findProductByProductName(String name);
 }

@@ -17,19 +17,19 @@ import javax.validation.Valid;
 public class UsersController {
     final UsersServiceImpl usersService;
 
-    @GetMapping("/login/{login}")
-    public ResponseEntity<UsersModel> getUserByUserLogin(@Valid @PathVariable("login") String userLogin) {
+    @GetMapping("/login/{userLogin}")
+    public ResponseEntity<UsersModel> getUserByUserLogin(@Valid @PathVariable("userLogin") String userLogin) {
         return ResponseEntity.ok().body(usersService.getUserByUserLogin(userLogin));
     }
 
     @PostMapping()
-    public ResponseEntity<UsersModel> createUser( @Valid @RequestBody UsersModel usersModel) {
-        return ResponseEntity.ok().body(usersService.createUser(usersModel));
+    public ResponseEntity<UsersModel> createRegularUser( @Valid @RequestBody UsersModel usersModel) {
+        return ResponseEntity.ok().body(usersService.createRegularUser(usersModel));
     }
 
-    @PutMapping("/id/{userId}")
-    public ResponseEntity<UsersModel> updateUser(@PathVariable("userId") Long userId,@Valid @RequestBody UsersModel usersModel) {
-        return ResponseEntity.ok().body(usersService.updateUser(userId, usersModel));
+    @PutMapping("/login/{userLogin}")
+    public ResponseEntity<UsersModel> updateRegularUser(@PathVariable("userLogin") String userLogin,@Valid @RequestBody UsersModel usersModel) {
+        return ResponseEntity.ok().body(usersService.updateRegularUser(userLogin, usersModel));
     }
 
     @DeleteMapping("/login/{userLogin}")
