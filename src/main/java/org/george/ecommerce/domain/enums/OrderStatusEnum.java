@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum OrderStatusEnum {
     CREATED ("Order Created"),
     SHIPPED ("Order Shipped"),
-    COMPLETED ("Order completed");
+    COMPLETED ("Order completed"),
+    CANCELLED ("Order canceled");
 
     final String status;
 }

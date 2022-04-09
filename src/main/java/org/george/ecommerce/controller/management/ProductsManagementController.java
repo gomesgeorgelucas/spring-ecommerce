@@ -44,7 +44,7 @@ public class ProductsManagementController {
     }
 
     @GetMapping("/search")
-    public Page<ProductsModel> findAllProductsByFilter(@RequestBody ProductsModel productsModel, Pageable pageable) {
+    public Page<ProductsModel> findAllProductsByFilter(@Valid @RequestBody ProductsModel productsModel, Pageable pageable) {
         return productsService.getAllProductsByFilter(productsModel, pageable);
     }
 
@@ -60,7 +60,7 @@ public class ProductsManagementController {
     }
 
     @DeleteMapping("/id/{productId}")
-    public ResponseEntity<String> deleteProduct(@PathVariable("productId") Long productId) {
+    public ResponseEntity<String> deleteProduct(@Valid @PathVariable("productId") Long productId) {
         productsService.deleteProductById(productId);
         return ResponseEntity.ok().body("Deleted");
     }

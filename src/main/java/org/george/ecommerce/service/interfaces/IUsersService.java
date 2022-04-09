@@ -12,4 +12,5 @@ public interface IUsersService {
     UsersModel updateUser(Long id, UsersModel usersModel);
     void deleteUser(UsersModel usersModel);
     void deleteUserByUserId(Long userId);
+    void deleteUserByUserLogin(String userLogin);
 }

@@ -19,4 +19,6 @@ public interface IProductsService {
     Page<ProductsModel> getAllProductsByFilter(ProductsModel productsModel, Pageable pageable);
 
     Page<ProductCategoryDTO> findByProductAndCategory(Pageable pageable);
+
+    ProductsModel findProductByProductName(String productName);
 }

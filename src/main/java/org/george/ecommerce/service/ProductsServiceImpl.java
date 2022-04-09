@@ -31,7 +31,6 @@ public class ProductsServiceImpl implements IProductsService {
         return productsRepository.findByProductAndCategory(pageable);
     }
 
-    //@PreAuthorize("hasRole('ROLE_USER')")
     @Override
     public Page<ProductsModel> getAllProducts(Pageable pageable) {
         Page<ProductsModel> page = productsRepository.findAll(pageable);
@@ -57,12 +56,17 @@ public class ProductsServiceImpl implements IProductsService {
         return productsRepository.save(productsModel);
     }
 
-    //@PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Override
+    public ProductsModel findProductByProductName(String productName) {
+        if (productsRepository.findProductByProductName(productName).isEmpty()) {
+            throw new NotFoundException("Product not found");
+        }
+
+        return productsRepository.findProductByProductName(productName).get();
+    }
+
     @Override
     public ProductsModel updateProduct(Long productId, ProductsModel productsModel) {
-        //ProductsModel productUpdate = getProductById(productId);
-        //BeanUtils.copyProperties(productsModel, productUpdate);
-        //return productsRepository.save(productUpdate);
         if(productsRepository.findById(productId).isEmpty()) {
             throw new NotFoundException("Product not found");
         }

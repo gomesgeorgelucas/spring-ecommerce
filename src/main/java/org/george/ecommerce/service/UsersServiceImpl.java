@@ -73,6 +73,15 @@ public class UsersServiceImpl implements IUsersService {
     }
 
     @Override
+    public void deleteUserByUserLogin(String userLogin) {
+        if (usersRepository.findByUserLogin(userLogin).isEmpty()) {
+            throw new NotFoundException("User not found");
+        }
+
+        deleteUserByUserLogin(userLogin);
+    }
+
+    @Override
     public void deleteUserByUserId(Long userId) {
         if (usersRepository.findById(userId).isEmpty()) {
             throw new NotFoundException("User not found");

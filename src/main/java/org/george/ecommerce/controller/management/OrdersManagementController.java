@@ -24,22 +24,27 @@ public class OrdersManagementController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createProduct(
+    public ResponseEntity<?> createOrder(
             @RequestBody OrdersModel ordersModel) {
-        return ResponseEntity.ok().body(ordersService.createProduct(ordersModel));
+        return ResponseEntity.ok().body(ordersService.createOrder(ordersModel));
     }
 
     @PutMapping("/id/{orderId}")
-    public ResponseEntity<?> updateOrder(
+    public ResponseEntity<?> updateOrderByOrderId(
             @PathVariable("orderId") Long orderId,
             @RequestBody OrdersModel ordersModel) {
-        return ResponseEntity.ok().body(ordersService.updateOrder(orderId, ordersModel));
+        return ResponseEntity.ok().body(ordersService.updateOrderByOrderId(orderId, ordersModel));
     }
 
     @DeleteMapping("/id/{orderId}")
-    public ResponseEntity<?> deleteOrderById(
+    public ResponseEntity<?> deleteOrderByOrderId(
             @PathVariable("orderId") Long orderId) {
         ordersService.deleteOrderById(orderId);
         return ResponseEntity.ok().body("Deleted");
+    }
+
+    @PutMapping("/cancel/{orderId}")
+    public ResponseEntity<?> cancelOrderByOrderId(@PathVariable("orderId") Long orderId) {
+        return ResponseEntity.ok().body(ordersService.cancelOrderById(orderId));
     }
 }

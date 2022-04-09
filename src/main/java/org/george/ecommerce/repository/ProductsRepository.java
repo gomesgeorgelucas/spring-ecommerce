@@ -20,5 +20,5 @@ public interface ProductsRepository extends JpaRepository<ProductsModel, Long>, 
     )
     Page<ProductCategoryDTO> findByProductAndCategory(Pageable pageable);
 
-    Optional<ProductsModel> findProductsByProductName(String name);
+    Optional<ProductsModel> findProductByProductName(String name);
 }

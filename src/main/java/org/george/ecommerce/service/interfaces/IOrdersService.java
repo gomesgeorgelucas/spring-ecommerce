@@ -7,11 +7,17 @@ import org.springframework.data.domain.Pageable;
 public interface IOrdersService {
     Page<OrdersModel> getAllOrders(Pageable pageable);
 
+    Page<OrdersModel> getAllOrdersByOrdersUserLogin(String userLogin, Pageable pageable);
+
     OrdersModel getOrderById(Long orderId);
 
-    OrdersModel createProduct(OrdersModel ordersModel);
+    OrdersModel createOrder(OrdersModel ordersModel);
 
-    OrdersModel updateOrder(Long orderId, OrdersModel productsModel);
+    OrdersModel updateOrderByOrderId(Long orderId, OrdersModel productsModel);
 
     void deleteOrderById(Long orderId);
+
+    OrdersModel cancelOrderById(Long orderId);
+
+
 }
