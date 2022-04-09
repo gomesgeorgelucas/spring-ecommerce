@@ -33,15 +33,15 @@ public class OrdersModel {
     @Enumerated(EnumType.STRING)
     OrderStatusEnum orderStatus;
 
-    @ManyToMany
+    @ManyToMany (fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinTable(
             name = "ec_ordered_products",
-            joinColumns = @JoinColumn(name="id_order"),
-            inverseJoinColumns = @JoinColumn(name = "id_product")
+            joinColumns = @JoinColumn(name="id_order", nullable = false, updatable = false),
+            inverseJoinColumns = @JoinColumn(name = "id_product", nullable = false, updatable = false)
     )
     Collection<ProductsModel> orderedProducts;
 
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinTable(
             name = "ec_user_orders",
             joinColumns = @JoinColumn(name="id_order"),

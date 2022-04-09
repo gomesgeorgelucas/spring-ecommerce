@@ -46,6 +46,10 @@ powered By: Infected Mushroom - Saeed ;)
   - Security
     - JWT
 
+### TODO
+- [ ] Fix Deletion (Remaining elements)
+- [ ] Replace all answers and requests with DTOs
+
 ### Extra-credit
 - [ ] remover @Query dos repositories e colocar no ORM.xml namedQuery    
 - [ ] Campo de busca de produto com sugestões

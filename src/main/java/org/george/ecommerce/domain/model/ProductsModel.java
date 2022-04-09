@@ -2,6 +2,7 @@ package org.george.ecommerce.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -29,22 +30,23 @@ public class ProductsModel {
     @Column(name = "quantity_product")
     Long productQuantity;
 
-    @ManyToMany
+    @ManyToMany (fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @Lazy
     @JoinTable(
             name = "ec_product_orders",
-            joinColumns = @JoinColumn(name="id_product"),
-            inverseJoinColumns = @JoinColumn(name = "id_order")
+            joinColumns = @JoinColumn(name="id_product", nullable = false, updatable = false),
+            inverseJoinColumns = @JoinColumn(name = "id_order", nullable = false, updatable = false)
     )
     @JsonIgnore
     Collection<OrdersModel> productsOrdered;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Lazy
     @JoinTable(
             name = "ec_category_products",
-            joinColumns = @JoinColumn(name="id_product"),
-            inverseJoinColumns = @JoinColumn(name = "id_product_category")
+            joinColumns = @JoinColumn(name="id_product", nullable = false, updatable = false),
+            inverseJoinColumns = @JoinColumn(name = "id_product_category", nullable = false, updatable = false)
     )
-    @JsonIgnore
     Set<ProductCategoriesModel> productCategories;
 
     @ManyToOne(fetch = FetchType.EAGER)

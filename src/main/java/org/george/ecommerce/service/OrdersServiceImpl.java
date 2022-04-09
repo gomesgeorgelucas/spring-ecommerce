@@ -33,8 +33,14 @@ public class OrdersServiceImpl implements IOrdersService {
     final ModelMapper modelMapper = new ModelMapper();
 
     @Override
+    @Transactional
     public Page<OrdersModel> getAllOrders(Pageable pageable) {
-        return ordersRepository.findAll(pageable);
+        if (ordersRepository.findAll(pageable).isEmpty()) {
+            throw new NotFoundException("No orders found");
+        }
+
+        Page<OrdersModel> pageReturned = ordersRepository.findAll(pageable);
+        return pageReturned;
     }
 
     @Transactional
@@ -48,11 +54,10 @@ public class OrdersServiceImpl implements IOrdersService {
         return ordersModel;
     }
 
-    //TODO - Fazer loop para inserir a quantidade de elementos no product ordered e calcular a quantidade iterando quando puxar a ordem (cancelar)
-    //TODO - Não armazena quantidade, então tem que contar todos os produtos e depois atualizar na hora de enviar
     @Override
     @Transactional
     public OrdersModel createOrder(OrdersModel ordersModel) {
+        //TODO - check if quantity is available
         if (usersRepository.findByUserLogin(ordersModel.getOrderUser().getUserLogin()).isEmpty()) {
             throw new NotFoundException("User not found");
         }
@@ -67,8 +72,11 @@ public class OrdersServiceImpl implements IOrdersService {
             ProductsModel storedProduct = productsRepository.findProductByProductName(product.getProductName()).get();
             ProductsModel soldProduct = ProductsModel.builder().build();
             modelMapper.map(storedProduct, soldProduct);
-            soldProduct.setProductQuantity(product.getProductQuantity());
-            shoppingCart.add(soldProduct);
+
+            for (long productQuantity = 0; productQuantity < product.getProductQuantity(); productQuantity++) {
+                soldProduct.setProductQuantity(1L);
+                shoppingCart.add(soldProduct);
+            }
         }
 
         OrdersModel newOrder = OrdersModel.builder()
@@ -82,15 +90,16 @@ public class OrdersServiceImpl implements IOrdersService {
 
         for (ProductsModel product : shoppingCart) {
             ProductsModel productToUpdate = productsRepository.findById(product.getProductId()).get();
-            long remainingProducts = productToUpdate.getProductQuantity() - product.getProductQuantity();
-            if (remainingProducts > 0) {
-                productToUpdate.setProductQuantity(remainingProducts);
+            if (productToUpdate.getProductQuantity() > 0) {
+                productToUpdate.setProductQuantity(productToUpdate.getProductQuantity()-1);
             } else {
                 productToUpdate.setProductQuantity(EMPTY_STOCK);
             }
+
             if (productToUpdate.getProductsOrdered() == null) {
                 productToUpdate.setProductsOrdered(new ArrayList<>());
             }
+
             productToUpdate.getProductsOrdered().add(orderCreated);
             productsRepository.save(productToUpdate);
         }
@@ -136,7 +145,11 @@ public class OrdersServiceImpl implements IOrdersService {
 
         restoreProductInventory(orderId);
 
-        ordersRepository.deleteById(orderId);
+        OrdersModel ordersToDelete = ordersRepository.findById(orderId).get();
+        ordersToDelete.setOrderedProducts(null);
+        ordersToDelete.setOrderUser(null);
+        OrdersModel saved = ordersRepository.save(ordersToDelete);
+        //ordersRepository.deleteById(orderId);
     }
 
     /**
@@ -148,10 +161,9 @@ public class OrdersServiceImpl implements IOrdersService {
         try {
             OrdersModel orderToRevert = ordersRepository.findById(orderId).get();
             if (orderToRevert.getOrderStatus() == CREATED) {
-                for (ProductsModel product :
-                        orderToRevert.getOrderedProducts()) {
+                for (ProductsModel product : orderToRevert.getOrderedProducts()) {
                     ProductsModel productToRestore = productsRepository.findById(product.getProductId()).get();
-                    productToRestore.setProductQuantity(productToRestore.getProductQuantity() + product.getProductQuantity());
+                    productToRestore.setProductQuantity(productToRestore.getProductQuantity()+1L);
                     productsRepository.save(productToRestore);
                 }
             }
