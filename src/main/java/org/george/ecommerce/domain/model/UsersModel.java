@@ -29,7 +29,7 @@ public class UsersModel {
     @Column(name = "passwd_user", nullable = false)
     String userPassword;
 
-    @ManyToMany
+    @OneToMany
     @JoinTable(
             name = "ec_user_orders",
             joinColumns = @JoinColumn(name="id_user"),

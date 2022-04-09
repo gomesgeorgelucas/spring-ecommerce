@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.george.ecommerce.domain.model.RolesModel;
 import org.george.ecommerce.domain.model.UsersModel;
 import org.george.ecommerce.repository.UsersRepository;
+import org.george.ecommerce.service.interfaces.IUsersService;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -13,9 +14,9 @@ import org.webjars.NotFoundException;
 
 @AllArgsConstructor
 @Service
-public class UsersService implements IUsersService {
+public class UsersServiceImpl implements IUsersService {
     final UsersRepository usersRepository;
-    final RolesService rolesService;
+    final RolesServiceImpl rolesService;
     final ModelMapper modelMapper = new ModelMapper();
 
     @Override

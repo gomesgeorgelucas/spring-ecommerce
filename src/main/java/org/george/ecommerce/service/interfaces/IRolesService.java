@@ -1,4 +1,4 @@
-package org.george.ecommerce.service;
+package org.george.ecommerce.service.interfaces;
 
 import org.george.ecommerce.domain.enums.UserRoleEnum;
 import org.george.ecommerce.domain.model.RolesModel;

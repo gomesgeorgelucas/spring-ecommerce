@@ -2,7 +2,7 @@ package org.george.ecommerce.controller.management;
 
 import lombok.AllArgsConstructor;
 import org.george.ecommerce.domain.model.RolesModel;
-import org.george.ecommerce.service.RolesService;
+import org.george.ecommerce.service.RolesServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/management/api/store/roles")
 public class RolesManagementController {
-    final RolesService rolesService;
+    final RolesServiceImpl rolesService;
 
     @GetMapping
     public ResponseEntity<Page<RolesModel>> getAllRoles(Pageable pageable) {

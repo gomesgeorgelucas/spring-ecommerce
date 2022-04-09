@@ -27,6 +27,7 @@
 ***Service deve ter interface e implementação***
 ***Utilizar apenas roles!!!***
 
+- [ ] ORM.xml namedQuery
 **MODELAGEM**
  - [ ] TODO
 ### Dependencies:
@@ -40,6 +41,6 @@
   - PostgreSQL
   - WEB
   - Security
-
+    - JWT
 ### Extra-credit
 - [ ] Campo de busca de produto com sugestões

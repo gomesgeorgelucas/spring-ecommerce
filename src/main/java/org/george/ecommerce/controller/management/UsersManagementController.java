@@ -2,7 +2,7 @@ package org.george.ecommerce.controller.management;
 
 import lombok.AllArgsConstructor;
 import org.george.ecommerce.domain.model.UsersModel;
-import org.george.ecommerce.service.UsersService;
+import org.george.ecommerce.service.UsersServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/management/api/store/users")
 public class UsersManagementController {
-    final UsersService usersService;
+    final UsersServiceImpl usersService;
 
     @GetMapping()
     public ResponseEntity<Page<UsersModel>> getAllUsers(Pageable pageable) {

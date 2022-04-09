@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.george.ecommerce.domain.enums.UserRoleEnum;
 import org.george.ecommerce.domain.model.RolesModel;
 import org.george.ecommerce.repository.RolesRepository;
+import org.george.ecommerce.service.interfaces.IRolesService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import org.webjars.NotFoundException;
 
 @AllArgsConstructor
 @Service
-public class RolesService implements IRolesService{
+public class RolesServiceImpl implements IRolesService {
     final RolesRepository rolesRepository;
 
     @Override

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Set;
@@ -19,17 +18,16 @@ public class ProductsModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_product")
-    Long id;
+    Long productId;
 
     @Column(name = "name_product", nullable = false)
     String productName;
-
     @Column(name = "description_product")
-    String description;
+    String productDescription;
     @Column(name = "unit_price_product", nullable = false)
-    BigDecimal unitPrice;
+    BigDecimal productUnitPrice;
     @Column(name = "quantity_product")
-    Long quantity;
+    Long productQuantity;
 
     @ManyToMany
     @JoinTable(
@@ -40,17 +38,16 @@ public class ProductsModel {
     @JsonIgnore
     Collection<OrdersModel> productsOrdered;
 
-    @NotNull
     @ManyToMany
     @JoinTable(
             name = "ec_category_products",
             joinColumns = @JoinColumn(name="id_product"),
             inverseJoinColumns = @JoinColumn(name = "id_product_category")
     )
+    @JsonIgnore
     Set<ProductCategoriesModel> productCategories;
 
-    @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
             name = "id_product_creator_user",
             referencedColumnName = "id_user",

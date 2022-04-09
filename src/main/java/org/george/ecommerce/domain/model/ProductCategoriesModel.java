@@ -1,7 +1,6 @@
 package org.george.ecommerce.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.common.collect.Sets;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,7 +18,7 @@ public class ProductCategoriesModel {
     @Column(name = "id_product_category")
     Long productCategoryId;
 
-    @Column(name = "name_product_category", nullable = false)
+    @Column(name = "name_product_category", unique = true, nullable = false)
     String productCategoryName;
 
     @ManyToMany

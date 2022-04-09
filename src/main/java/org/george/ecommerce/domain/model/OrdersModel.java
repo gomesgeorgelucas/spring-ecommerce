@@ -2,12 +2,12 @@ package org.george.ecommerce.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.george.ecommerce.domain.enums.OrderStatusEnum;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.Collection;
 
 @AllArgsConstructor
@@ -30,7 +30,8 @@ public class OrdersModel {
     ZonedDateTime orderUpdated;
 
     @Column(name = "status_order", nullable = false)
-    String orderStatus;
+    @Enumerated(EnumType.STRING)
+    OrderStatusEnum orderStatus;
 
     @ManyToMany
     @JoinTable(
@@ -40,12 +41,12 @@ public class OrdersModel {
     )
     Collection<ProductsModel> orderedProducts;
 
-    @ManyToMany
+    @ManyToOne
     @JoinTable(
             name = "ec_user_orders",
             joinColumns = @JoinColumn(name="id_order"),
             inverseJoinColumns = @JoinColumn(name = "id_user")
     )
     @JsonIgnore
-    Collection<UsersModel> orderUsers;
+    UsersModel orderUser;
 }
