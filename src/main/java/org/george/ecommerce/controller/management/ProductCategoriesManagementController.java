@@ -6,7 +6,10 @@ import org.george.ecommerce.service.ProductCategoriesServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @AllArgsConstructor
 @RestController
@@ -14,30 +17,38 @@ import org.springframework.web.bind.annotation.*;
 public class ProductCategoriesManagementController {
     final ProductCategoriesServiceImpl productCategoriesService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<Page<ProductCategoriesModel>> getAllProductCategories(Pageable pageable) {
         return ResponseEntity.ok().body(productCategoriesService.getAllProductCategories(pageable));
     }
 
-    @GetMapping("/id/{productCategoryId}")
-    public ResponseEntity<?> getProductCategoryById(@PathVariable("productCategoryId") Long productCategoryId) {
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/{productCategoryId}")
+    public ResponseEntity<?> getProductCategoryById(
+            @PathVariable("productCategoryId") Long productCategoryId) {
         return ResponseEntity.ok().body(productCategoriesService.getProductCategory(productCategoryId));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> createProductCategory(
-            @RequestBody ProductCategoriesModel productCategoriesModel) {
+            @RequestBody
+            @Valid ProductCategoriesModel productCategoriesModel) {
         return ResponseEntity.ok().body(productCategoriesService.createProductCategory(productCategoriesModel));
     }
 
-    @PutMapping("/name/{productCategoryName}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{productCategoryName}")
     public ResponseEntity<?> updateProductCategory(
             @PathVariable("productCategoryName") String productCategoryName,
-            @RequestBody ProductCategoriesModel productCategoriesModel) {
+            @RequestBody
+            @Valid ProductCategoriesModel productCategoriesModel) {
         return ResponseEntity.ok().body(productCategoriesService.updateProductCategory(productCategoryName, productCategoriesModel));
     }
 
-    @DeleteMapping("/id/{productCategoryId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{productCategoryId}")
     public ResponseEntity<?> deleteProductCategory(
             @PathVariable("productCategoryId") Long productCategoryId) {
         productCategoriesService.deleteProductCategoryById(productCategoryId);

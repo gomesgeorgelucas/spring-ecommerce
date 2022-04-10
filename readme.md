@@ -49,6 +49,7 @@ powered By: Infected Mushroom - Saeed ;)
 ### TODO
 - [ ] Fix Deletion (Remaining elements)
 - [ ] Replace all answers and requests with DTOs
+- [ ] Change table ordered products to @ElementCollection
 
 ### Extra-credit
 - [ ] remover @Query dos repositories e colocar no ORM.xml namedQuery    

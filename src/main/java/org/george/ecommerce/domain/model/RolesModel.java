@@ -1,11 +1,8 @@
 package org.george.ecommerce.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.common.collect.Sets;
 import lombok.*;
 import org.george.ecommerce.domain.enums.UserRoleEnum;
-import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 import java.util.Set;

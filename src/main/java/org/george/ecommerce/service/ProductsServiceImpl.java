@@ -33,8 +33,7 @@ public class ProductsServiceImpl implements IProductsService {
 
     @Override
     public Page<ProductsModel> getAllProducts(Pageable pageable) {
-        Page<ProductsModel> page = productsRepository.findAll(pageable);
-        return page;
+        return productsRepository.findAll(pageable);
     }
 
     @Override
@@ -42,8 +41,7 @@ public class ProductsServiceImpl implements IProductsService {
         if (productsRepository.findById(productId).isEmpty()) {
             throw new NotFoundException("Product not found");
         }
-        ProductsModel productsModel = productsRepository.findById(productId).get();
-        return productsModel;
+        return productsRepository.findById(productId).get();
     }
 
     @Override

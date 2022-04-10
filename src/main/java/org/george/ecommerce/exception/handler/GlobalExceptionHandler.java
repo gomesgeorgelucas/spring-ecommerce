@@ -28,13 +28,13 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler({NotFoundException.class, })
-    public ResponseEntity<Error> handleRebelNotFound(){
-        return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Error("Not found.", "Error"));
+    public ResponseEntity<Error> handleNotFound(NotFoundException ex){
+        return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Error(ex.getMessage(), "Error"));
     }
 
     @ExceptionHandler({HttpMessageNotReadableException.class, })
-    public ResponseEntity<Error> handleHttpMessageNotReadable(){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error("Invalid request. Malformed JSON.", "Error"));
+    public ResponseEntity<Error> handleHttpMessageNotReadable(HttpMessageNotReadableException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error(ex.getMessage(), "Error"));
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

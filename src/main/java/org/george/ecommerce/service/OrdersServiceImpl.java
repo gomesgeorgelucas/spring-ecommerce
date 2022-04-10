@@ -39,8 +39,7 @@ public class OrdersServiceImpl implements IOrdersService {
             throw new NotFoundException("No orders found");
         }
 
-        Page<OrdersModel> pageReturned = ordersRepository.findAll(pageable);
-        return pageReturned;
+        return ordersRepository.findAll(pageable);
     }
 
     @Transactional
@@ -50,6 +49,7 @@ public class OrdersServiceImpl implements IOrdersService {
             throw new NotFoundException("Order not found");
         }
         OrdersModel ordersModel = ordersRepository.findById(orderId).get();
+
         Collection<ProductsModel> orderedProducts = ordersModel.getOrderedProducts();
         return ordersModel;
     }
@@ -58,6 +58,7 @@ public class OrdersServiceImpl implements IOrdersService {
     @Transactional
     public OrdersModel createOrder(OrdersModel ordersModel) {
         //TODO - check if quantity is available
+
         if (usersRepository.findByUserLogin(ordersModel.getOrderUser().getUserLogin()).isEmpty()) {
             throw new NotFoundException("User not found");
         }
@@ -89,19 +90,21 @@ public class OrdersServiceImpl implements IOrdersService {
 
 
         for (ProductsModel product : shoppingCart) {
-            ProductsModel productToUpdate = productsRepository.findById(product.getProductId()).get();
-            if (productToUpdate.getProductQuantity() > 0) {
-                productToUpdate.setProductQuantity(productToUpdate.getProductQuantity()-1);
-            } else {
-                productToUpdate.setProductQuantity(EMPTY_STOCK);
-            }
+            if (productsRepository.findById(product.getProductId()).isPresent()) {
+                ProductsModel productToUpdate = productsRepository.findById(product.getProductId()).get();
+                if (productToUpdate.getProductQuantity() > 0) {
+                    productToUpdate.setProductQuantity(productToUpdate.getProductQuantity() - 1);
+                } else {
+                    productToUpdate.setProductQuantity(EMPTY_STOCK);
+                }
 
-            if (productToUpdate.getProductsOrdered() == null) {
-                productToUpdate.setProductsOrdered(new ArrayList<>());
-            }
+                if (productToUpdate.getProductsOrdered() == null) {
+                    productToUpdate.setProductsOrdered(new ArrayList<>());
+                }
 
-            productToUpdate.getProductsOrdered().add(orderCreated);
-            productsRepository.save(productToUpdate);
+                productToUpdate.getProductsOrdered().add(orderCreated);
+                productsRepository.save(productToUpdate);
+            }
         }
 
         return orderCreated;
@@ -149,7 +152,7 @@ public class OrdersServiceImpl implements IOrdersService {
         ordersToDelete.setOrderedProducts(null);
         ordersToDelete.setOrderUser(null);
         OrdersModel saved = ordersRepository.save(ordersToDelete);
-        //ordersRepository.deleteById(orderId);
+        ordersRepository.deleteById(orderId);
     }
 
     /**
@@ -159,12 +162,16 @@ public class OrdersServiceImpl implements IOrdersService {
     @Transactional
     public void restoreProductInventory(Long orderId) {
         try {
-            OrdersModel orderToRevert = ordersRepository.findById(orderId).get();
-            if (orderToRevert.getOrderStatus() == CREATED) {
-                for (ProductsModel product : orderToRevert.getOrderedProducts()) {
-                    ProductsModel productToRestore = productsRepository.findById(product.getProductId()).get();
-                    productToRestore.setProductQuantity(productToRestore.getProductQuantity()+1L);
-                    productsRepository.save(productToRestore);
+            if (ordersRepository.findById(orderId).isPresent()) {
+                OrdersModel orderToRevert = ordersRepository.findById(orderId).get();
+                if (orderToRevert.getOrderStatus() == CREATED) {
+                    for (ProductsModel product : orderToRevert.getOrderedProducts()) {
+                        if (productsRepository.findById(product.getProductId()).isPresent()) {
+                            ProductsModel productToRestore = productsRepository.findById(product.getProductId()).get();
+                            productToRestore.setProductQuantity(productToRestore.getProductQuantity() + 1L);
+                            productsRepository.save(productToRestore);
+                        }
+                    }
                 }
             }
         } catch (Exception ignored) {

@@ -11,6 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,46 +22,63 @@ import javax.validation.Valid;
 public class ProductsManagementController {
     final ProductsServiceImpl productsService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> getAllProducts(@PageableDefault(size = 5)
-                                                 @SortDefault.SortDefaults({
-                                                         @SortDefault(sort = "productUnitPrice", direction = Sort.Direction.ASC),
-                                                         @SortDefault(sort = "productName", direction = Sort.Direction.ASC)})
-                                                         Pageable pageable) {
+    public ResponseEntity<?> getAllProducts(
+            @PageableDefault(size = 5)
+            @SortDefault.SortDefaults({
+                    @SortDefault(sort = "productUnitPrice", direction = Sort.Direction.ASC),
+                    @SortDefault(sort = "productName", direction = Sort.Direction.ASC)}) Pageable pageable) {
         Page<ProductsModel> products = productsService.getAllProducts(pageable);
         return ResponseEntity.ok(products);
     }
 
-    @GetMapping("/id/{productId}")
-    public ResponseEntity<?> getProductById(@PathVariable("productId") Long productId) {
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/{productId}")
+    public ResponseEntity<?> getProductById(
+            @PathVariable("productId") Long productId) {
         return ResponseEntity.ok().body(productsService.getProductById(productId));
     }
 
     //TODO - fix Query when Categories available
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/category")
     public ResponseEntity<Page<ProductCategoriesModelView>> findProductsModelsByProductNameAndAndProductCategories(Pageable pageable){
         return ResponseEntity.ok().body(productsService.findByProductAndCategory(pageable));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/search")
-    public Page<ProductsModel> findAllProductsByFilter(@Valid @RequestBody ProductsModel productsModel, Pageable pageable) {
+    public Page<ProductsModel> findAllProductsByFilter(
+            @RequestBody
+            @Valid ProductsModel productsModel,
+            Pageable pageable) {
         return productsService.getAllProductsByFilter(productsModel, pageable);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<?> createProduct(@RequestBody @Valid ProductsModel productsModel) {
+    public ResponseEntity<?> createProduct(
+            @RequestBody
+            @Valid ProductsModel productsModel) {
         ProductsModel product = productsService.createProduct(productsModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
 
-    @PutMapping("/id/{productId}")
-    public ResponseEntity<?> updateProduct(@PathVariable("productId") Long productId, @RequestBody @Valid ProductsModel productsModel) {
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{productId}")
+    public ResponseEntity<?> updateProduct(
+            @PathVariable("productId") Long productId,
+            @RequestBody
+            @Valid ProductsModel productsModel) {
         return ResponseEntity.ok(productsService.updateProduct(productId, productsModel));
     }
 
-    @DeleteMapping("/id/{productId}")
-    public ResponseEntity<String> deleteProduct(@Valid @PathVariable("productId") Long productId) {
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<String> deleteProduct(
+            @PathVariable("productId") Long productId) {
         productsService.deleteProductById(productId);
         return ResponseEntity.ok().body("Deleted");
     }

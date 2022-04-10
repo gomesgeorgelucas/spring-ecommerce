@@ -1,6 +1,5 @@
 package org.george.ecommerce.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.george.ecommerce.domain.enums.OrderStatusEnum;
 import org.hibernate.annotations.CreationTimestamp;

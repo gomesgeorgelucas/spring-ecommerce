@@ -27,8 +27,7 @@ public class ProductCategoriesServiceImpl implements IProductCategoriesService {
         if (productCategoriesRepository.findById(productCategoryId).isEmpty()) {
             throw new NotFoundException("Product Category not found");
         }
-        ProductCategoriesModel productCategoriesModel = productCategoriesRepository.findById(productCategoryId).get();
-        return productCategoriesModel;
+        return productCategoriesRepository.findById(productCategoryId).get();
     }
 
     @Override

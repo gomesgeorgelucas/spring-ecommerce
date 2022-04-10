@@ -5,9 +5,11 @@ import org.george.ecommerce.domain.model.OrdersModel;
 import org.george.ecommerce.service.OrdersServiceImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
@@ -16,28 +18,42 @@ import org.springframework.web.bind.annotation.*;
 public class OrdersController {
     final OrdersServiceImpl ordersService;
 
-    @GetMapping("/login/{userLogin}")
-    public ResponseEntity<?> getAllOrdersByOrdersUserLogin(@PathVariable("userLogin") String userLogin,
-                                          @PageableDefault(size = 5)
-                                          @SortDefault.SortDefaults({
-                                                  @SortDefault(sort = "orderTime", direction = Sort.Direction.DESC),
-                                                  @SortDefault(sort = "orderStatus", direction = Sort.Direction.DESC)}) Pageable pageable) {
+    @GetMapping("/{userLogin}")
+    @PreAuthorize("#userLogin == authentication.name or hasRole('ADMIN')")
+    public ResponseEntity<?> getAllOrdersByOrdersUserLogin(
+            @PathVariable("userLogin")
+            @Param("userLogin") String userLogin,
+            @PageableDefault(size = 5)
+            @SortDefault.SortDefaults(
+                    {@SortDefault(sort = "orderTime", direction = Sort.Direction.DESC),
+                            @SortDefault(sort = "orderStatus", direction = Sort.Direction.DESC)}) Pageable pageable) {
         return ResponseEntity.ok().body(ordersService.getAllOrdersByOrdersUserLogin(userLogin, pageable));
     }
 
-    @GetMapping("/id/{orderId}")
-    public ResponseEntity<?> getOrderById(@PathVariable("orderId") Long orderId) {
+    @GetMapping("/{userLogin}/{orderId}")
+    @PreAuthorize("#userLogin == authentication.name or hasRole('ADMIN')")
+    public ResponseEntity<?> getOrderById(
+            @PathVariable("userLogin")
+            @Param ("userLogin") String userLogin,
+            @PathVariable("orderId") Long orderId) {
         return ResponseEntity.ok().body(ordersService.getOrderById(orderId));
     }
 
-    @PostMapping
+    @PostMapping("/{userLogin}")
+    @PreAuthorize("#userLogin == authentication.name or hasRole('ADMIN')")
     public ResponseEntity<?> createOrder(
+            @PathVariable("userLogin")
+            @Param("userLogin") String userLogin,
             @RequestBody OrdersModel ordersModel) {
         return ResponseEntity.ok().body(ordersService.createOrder(ordersModel));
     }
 
-    @PutMapping("/id/{orderId}")
-    public ResponseEntity<?> cancelOrderByOrderId(@PathVariable("orderId") Long orderId) {
+    @PutMapping("/{userLogin}/{orderId}")
+    @PreAuthorize("#userLogin == authentication.name or hasRole('ADMIN')")
+    public ResponseEntity<?> cancelOrderByOrderId(
+            @PathVariable("userLogin")
+            @Param("userLogin") String userLogin,
+            @PathVariable("orderId") Long orderId) {
         return ResponseEntity.ok().body(ordersService.cancelOrderById(orderId));
     }
 }

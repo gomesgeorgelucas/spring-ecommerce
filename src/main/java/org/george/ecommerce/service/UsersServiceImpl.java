@@ -10,17 +10,19 @@ import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
 import javax.transaction.Transactional;
 
-import static org.george.ecommerce.domain.enums.UserRoleEnum.ADMIN;
-import static org.george.ecommerce.domain.enums.UserRoleEnum.USER;
+import static org.george.ecommerce.domain.enums.UserRoleEnum.ROLE_ADMIN;
+import static org.george.ecommerce.domain.enums.UserRoleEnum.ROLE_USER;
 
 @AllArgsConstructor
 @Service
 public class UsersServiceImpl implements IUsersService {
+    final PasswordEncoder passwordEncoder;
     final UsersRepository usersRepository;
     final RolesServiceImpl rolesService;
     final ModelMapper modelMapper = new ModelMapper();
@@ -38,8 +40,7 @@ public class UsersServiceImpl implements IUsersService {
             throw new NotFoundException("Not found");
         }
 
-        UsersModel stored = usersRepository.findById(userId).get();
-        return stored;
+        return usersRepository.findById(userId).get();
     }
 
     @Transactional
@@ -48,8 +49,7 @@ public class UsersServiceImpl implements IUsersService {
         if (usersRepository.findByUserLogin(userLogin).isEmpty()) {
             throw new NotFoundException("User not found");
         }
-        UsersModel stored = usersRepository.findByUserLogin(userLogin).get();
-        return stored;
+        return usersRepository.findByUserLogin(userLogin).get();
     }
 
     @Transactional
@@ -57,17 +57,19 @@ public class UsersServiceImpl implements IUsersService {
     public UsersModel createUser(UsersModel usersModel) {
         RolesModel userRole = rolesService.getRoleByName(usersModel.getUserRole().getRoleName());
         usersModel.setUserRole(userRole);
+        usersModel.setUserLogin(passwordEncoder.encode(usersModel.getUserPassword()));
         return usersRepository.save(usersModel);
     }
 
     @Transactional
     @Override
     public UsersModel createRegularUser(UsersModel usersModel) {
-        if (usersModel.getUserRole() != null && usersModel.getUserRole().getRoleName() == ADMIN) {
+        if (usersModel.getUserRole() != null && usersModel.getUserRole().getRoleName() == ROLE_ADMIN) {
             throw new InvalidRequestException();
         }
-        RolesModel userRole = rolesService.getRoleByName(USER);
+        RolesModel userRole = rolesService.getRoleByName(ROLE_USER);
         usersModel.setUserRole(userRole);
+        usersModel.setUserPassword(passwordEncoder.encode(usersModel.getUserPassword()));
         return usersRepository.save(usersModel);
     }
 
@@ -78,16 +80,21 @@ public class UsersServiceImpl implements IUsersService {
             throw new NotFoundException("User not found");
         }
 
-        if (usersModel.getUserRole() != null && usersModel.getUserRole().getRoleName() == ADMIN) {
+        if (usersModel.getUserRole() != null && usersModel.getUserRole().getRoleName() == ROLE_ADMIN) {
             throw new InvalidRequestException();
         }
 
-        usersModel.setUserRole(rolesService.getRoleByName(USER));
+        usersModel.setUserRole(rolesService.getRoleByName(ROLE_USER));
         UsersModel stored = usersRepository.findByUserLogin(userLogin).get();
 
         if (stored.getUserRole().getRoleName() != usersModel.getUserRole().getRoleName()) {
             throw new InvalidRequestException();
         }
+
+        if (usersModel.getUserPassword() != null) {
+            usersModel.setUserPassword(passwordEncoder.encode(usersModel.getUserPassword()));
+        }
+
         modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
         modelMapper.map(usersModel, stored);
         return usersRepository.save(stored);
@@ -101,6 +108,9 @@ public class UsersServiceImpl implements IUsersService {
         }
 
         UsersModel stored = usersRepository.findById(userId).get();
+        if (usersModel.getUserPassword() != null) {
+            usersModel.setUserPassword(passwordEncoder.encode(usersModel.getUserPassword()));
+        }
         modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
         modelMapper.map(usersModel, stored);
         return usersRepository.save(stored);
@@ -126,7 +136,7 @@ public class UsersServiceImpl implements IUsersService {
 
         if (usersRepository.findByUserLogin(userLogin).isPresent()) {
             if (usersRepository.findByUserLogin(userLogin).get()
-                    .getUserRole().getRoleName() == ADMIN) {
+                    .getUserRole().getRoleName() == ROLE_ADMIN) {
                 throw new InvalidRequestException();
             }
         }
