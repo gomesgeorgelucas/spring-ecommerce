@@ -25,7 +25,7 @@ powered By: Infected Mushroom - Saeed ;)
 **USER/ADMIN**
 - logado 
   - deverão conseguir visualizar todos os produtos de acordo com categoria. exemplo: products/all-categories
-  - deverá conseguir visualizar todos os produtos de acordo com categoria(s) filtrada(s). exemplo: products/all-categories/{ids}
+  - deverá conseguir visualizar todos os produtos de acordo com categoria(s) filtrada(s). exemplo: products/all-categories/{categoryIds}
 - deslogado
   - deverão visualizar apenas home
 
@@ -47,6 +47,7 @@ powered By: Infected Mushroom - Saeed ;)
     - JWT
 
 ### TODO
+- [ ] Filter by product category
 - [ ] Fix Deletion (Remaining elements)
 - [ ] Replace all answers and requests with DTOs
 - [ ] Change table ordered products to @ElementCollection
@@ -55,5 +56,4 @@ powered By: Infected Mushroom - Saeed ;)
 - [ ] remover @Query dos repositories e colocar no ORM.xml namedQuery    
 - [ ] Campo de busca de produto com sugestões
 - [ ] Cancel Order -- All orders must keep registerer!
-- [ ] FrontPage
 - [ ] Texto das exceções deve ficar em arquivo separado ou constante (Classe separada)
