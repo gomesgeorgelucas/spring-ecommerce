@@ -21,4 +21,6 @@ public interface IProductsService {
     Page<ProductCategoriesModelView> findByProductAndCategory(Pageable pageable);
 
     ProductsModel findProductByProductName(String productName);
+
+    Page<ProductsModel> getProductsByCategoryName(String categoryName, Pageable pageable);
 }

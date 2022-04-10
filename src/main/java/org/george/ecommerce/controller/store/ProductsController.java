@@ -2,7 +2,6 @@ package org.george.ecommerce.controller.store;
 
 import lombok.AllArgsConstructor;
 import org.george.ecommerce.domain.model.ProductsModel;
-import org.george.ecommerce.domain.views.ProductCategoriesModelView;
 import org.george.ecommerce.service.ProductsServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,13 +37,18 @@ public class ProductsController {
         return ResponseEntity.ok().body(productsService.findProductByProductName(productName));
     }
 
-    //TODO - fix Query when Categories available
-    @GetMapping("/category")
-    public ResponseEntity<Page<ProductCategoriesModelView>> findProductsModelsByProductNameAndAndProductCategories(Pageable pageable){
-        return ResponseEntity.ok().body(productsService.findByProductAndCategory(pageable));
+//    //TODO - fix Query when Categories available
+//    @GetMapping("/byCategory/{categoryName}")
+//    public ResponseEntity<?>> findProductsModelsByProductNameAndAndProductCategories(Pageable pageable){
+//        return ResponseEntity.ok().body(productsService.findByProductAndCategory(pageable));
+//    }
+
+    @GetMapping("/category/{categoryName}")
+    public ResponseEntity<?> getProductsByCategoryName(@PathVariable String categoryName, Pageable pageable) {
+        return ResponseEntity.ok().body(productsService.getProductsByCategoryName(categoryName, pageable));
     }
 
-    @GetMapping("/search")
+    @GetMapping("/searchBy")
     public Page<ProductsModel> findAllProductsByFilter(@Valid @RequestBody ProductsModel productsModel, Pageable pageable) {
         return productsService.getAllProductsByFilter(productsModel, pageable);
     }

@@ -26,6 +26,15 @@ public class ProductsSpecification {
                 );
             }
 
+            if (!ObjectUtils.isEmpty(productsFilter.getProductDescription())) {
+                predicateList.add(
+                        criteriaBuilder.like(
+                                criteriaBuilder.upper(root.get("productDescription")), "%" + productsFilter.getProductName().
+                                        toUpperCase().concat("%")
+                        )
+                );
+            }
+
             if (!ObjectUtils.isEmpty(productsFilter.getProductUnitPrice())) {
                 predicateList.add(
                         criteriaBuilder.equal(

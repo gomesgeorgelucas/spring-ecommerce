@@ -64,6 +64,11 @@ public class ProductsServiceImpl implements IProductsService {
     }
 
     @Override
+    public Page<ProductsModel> getProductsByCategoryName(String categoryName, Pageable pageable) {
+        return productsRepository.findAllByProductCategoriesContaining(categoryName, pageable);
+    }
+
+    @Override
     public ProductsModel updateProduct(Long productId, ProductsModel productsModel) {
         if(productsRepository.findById(productId).isEmpty()) {
             throw new NotFoundException("Product not found");
