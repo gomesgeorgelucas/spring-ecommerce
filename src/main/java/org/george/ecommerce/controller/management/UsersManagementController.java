@@ -18,7 +18,7 @@ public class UsersManagementController {
     final UsersServiceImpl usersService;
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<Page<UsersModel>> getAllUsers(Pageable pageable) {
         return ResponseEntity.ok().body(usersService.getAllUsers(pageable));
     }

@@ -1,3 +1,8 @@
+application:
+  jwt:
+    secretKey:1my2Really3Strong4Key5Repeats#$21my2Really3Strong4Key5Repeats#$21my2Really3Strong4Key5Repeats#$2
+    tokenPrefix:Bearer 
+    tokenExpirationAfterDays:14
 
 server:
   port: 8080
