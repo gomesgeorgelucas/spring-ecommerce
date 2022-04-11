@@ -19,7 +19,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/management/api/store/products")
 public class ProductsManagementController {
-    final ProductsServiceImpl productsService;
+    private final ProductsServiceImpl productsService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
@@ -49,12 +49,21 @@ public class ProductsManagementController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/category/{categoryName}/{productName}")
+    public ResponseEntity<?> findAllByProductCategoriesInAndProductNameContaining(
+            @PathVariable("categoryName") String categoryName,
+            @PathVariable("productName") String productName,
+            Pageable pageable) {
+        return ResponseEntity.ok().body(productsService.findAllByProductCategoriesInAndProductNameContaining(categoryName, productName, pageable));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/searchBy")
-    public Page<ProductsModel> findAllProductsByFilter(
+    public ResponseEntity<?> findAllProductsByFilter(
             @RequestBody
             @Valid ProductsModel productsModel,
             Pageable pageable) {
-        return productsService.getAllProductsByFilter(productsModel, pageable);
+        return ResponseEntity.ok().body(productsService.getAllProductsByFilter(productsModel, pageable));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -74,6 +83,7 @@ public class ProductsManagementController {
             @Valid ProductsModel productsModel) {
         return ResponseEntity.ok(productsService.updateProduct(productId, productsModel));
     }
+
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{productId}")

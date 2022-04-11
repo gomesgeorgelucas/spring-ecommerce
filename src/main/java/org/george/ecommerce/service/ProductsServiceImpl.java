@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.webjars.NotFoundException;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Set;
 
@@ -88,6 +89,26 @@ public class ProductsServiceImpl implements IProductsService {
     @Override
     public Page<ProductsModel> getAllProductsByFilter(ProductsModel productsModel, Pageable pageable) {
         return productsRepository.findAll(productsSpecification.productSpecification(productsModel), pageable);
+    }
+
+    private boolean doesObjectContainField(Object object, String fieldName) {
+        Class<?> objectClass = object.getClass();
+        for (Field field : objectClass.getFields()) {
+            if (field.getName().equals(fieldName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //TODO - Must come as JSON not Get fields
+    public Page<ProductsModel> getAllProductsByFilter(String categoryInfo, String productInfo, Pageable pageable) {
+////        ProductsModel product = ProductsModel.builder().build();
+////        if (doesObjectContainField(product, productInfo)) {
+////            product.getClass().getField(productInfo).set
+////        }
+//        return productsRepository.findAll(productsSpecification.productSpecification(productsModel), pageable);
+        return null;
     }
 
     @Override

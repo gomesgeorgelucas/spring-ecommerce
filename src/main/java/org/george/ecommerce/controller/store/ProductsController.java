@@ -52,9 +52,21 @@ public class ProductsController {
         return ResponseEntity.ok().body(productsService.findAllByProductCategoriesInAndProductNameContaining(categoryName, productName, pageable));
     }
 
+    //TODO -
+    @GetMapping("/searchBy/{categoryInfo}/{productInfo}")
+    public ResponseEntity<?> findAllProductsByFilter(
+            @PathVariable("categoryInfo") String categoryInfo,
+            @PathVariable("productInfo") String productInfo,
+            Pageable pageable) {
+        return ResponseEntity.ok().body(productsService.getAllProductsByFilter(categoryInfo, productInfo, pageable));
+    }
+
     @GetMapping("/searchBy")
-    public Page<ProductsModel> findAllProductsByFilter(@Valid @RequestBody ProductsModel productsModel, Pageable pageable) {
-        return productsService.getAllProductsByFilter(productsModel, pageable);
+    public ResponseEntity<?> findAllProductsByFilter(
+            @RequestBody
+            @Valid ProductsModel productsModel,
+            Pageable pageable) {
+        return ResponseEntity.ok().body(productsService.getAllProductsByFilter(productsModel, pageable));
     }
 
 

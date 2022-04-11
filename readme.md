@@ -47,10 +47,15 @@ powered By: Infected Mushroom - Saeed ;)
     - JWT
 
 ### TODO
-- [ ] Filter by product category
-- [ ] Fix Deletion (Remaining elements)
+- [x] Filter by product category
+- [ ] Fix Order Deletion (Cascade/Orphan problem)
+  - Issue: There is no product inventory, product entity acts as repository and when delete order operation cascades, all matching products are deleted.
+  - Fix#1 - Change table ec_ordered_products to @ElementCollection - let ec_order manage the products (fix remaining products and order quantity).
+  - Fix#2 - Create entity ec_product_inventory and remove product quantity from entity ec_products
+    - Workaround: Method createOrder iterates over the quantity of products bought and adds products to products ordered 1-by-1 to match quantity bought. By counting the products with same productId on ec_ordered_products a DTO can be supplied with the quantities of each product ordered.
 - [ ] Replace all answers and requests with DTOs
-- [ ] Change table ordered products to @ElementCollection
+- [ ] Thin controllers - remove duplicate method calls and fix antMatchers
+- [ ] Implement basic Service Layer Interface (GET,POST,PUT,DELETE)
 
 ### Extra-credit
 - [ ] implemente refresh token controller

@@ -22,6 +22,8 @@ public interface IProductsService {
 
     Page<ProductsModel> getAllProductsByFilter(ProductsModel productsModel, Pageable pageable);
 
+    Page<ProductsModel> getAllProductsByFilter(String categoryInfo, String productInfo, Pageable pageable);
+
     ProductsModel findProductByProductName(String productName);
 
     Page<Set<ProductsModel>> findAllByProductCategoriesIn(String categoryName, Pageable pageable);
