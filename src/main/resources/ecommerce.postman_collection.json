@@ -1,0 +1,1171 @@
+{
+	"info": {
+		"_postman_id": "c802f863-247e-46d1-a4ac-287109d0e25c",
+		"name": "ecommerce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "management",
+			"item": [
+				{
+					"name": "roles",
+					"item": [
+						{
+							"name": "productCategories",
+							"item": [
+								{
+									"name": "getAllProductCategories",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/management/api/store/product-categories",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"management",
+												"api",
+												"store",
+												"product-categories"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getProductCategoryById",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/management/api/store/product-categories/id/1",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"management",
+												"api",
+												"store",
+												"product-categories",
+												"id",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "createCategory",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"productCategoryName\" : \"name3\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/management/api/store/product-categories",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"management",
+												"api",
+												"store",
+												"product-categories"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "updateProductCategory",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"productCategoryName\" : \"new name\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/management/api/store/product-categories/name/name1",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"management",
+												"api",
+												"store",
+												"product-categories",
+												"name",
+												"name1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "deleteProductCategory",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/management/api/store/product-categories/id/1",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"management",
+												"api",
+												"store",
+												"product-categories",
+												"id",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "createRoles",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"roleName\" : \"ADMIN\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/management/api/store/roles",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"management",
+										"api",
+										"store",
+										"roles"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteRole",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"roleName\" : \"ADMIN\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/management/api/store/roles",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"management",
+										"api",
+										"store",
+										"roles"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getAllRoles",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/management/api/store/roles",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"management",
+										"api",
+										"store",
+										"roles"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "users",
+					"item": [
+						{
+							"name": "getAllUsers",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/management/api/store/users",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"management",
+										"api",
+										"store",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getUserByUserLogin",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/management/api/store/users/login/login",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"management",
+										"api",
+										"store",
+										"users",
+										"login",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getUserByUserId",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/management/api/store/users/id/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"management",
+										"api",
+										"store",
+										"users",
+										"id",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createUser",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userName\" : \"name\",\r\n  \"userSurname\" : \"surname\",\r\n  \"userLogin\" : \"login\",\r\n  \"userPassword\" : \"password\",\r\n  \"userRole\" : {\r\n      \"roleName\" : \"ADMIN\"\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/management/api/store/users",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"management",
+										"api",
+										"store",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateUser",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userPassword\" : \"password2\"  \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/management/api/store/users/id/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"management",
+										"api",
+										"store",
+										"users",
+										"id",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteUser",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userLogin\":\"login\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/management/api/store/users/",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"management",
+										"api",
+										"store",
+										"users",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "products",
+					"item": [
+						{
+							"name": "getAllProducts",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/management/api/store/products",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"management",
+										"api",
+										"store",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getProduct",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/management/api/store/products/id/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"management",
+										"api",
+										"store",
+										"products",
+										"id",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "productAndCategory",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/management/api/store/products/and-category",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"management",
+										"api",
+										"store",
+										"products",
+										"and-category"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "search",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"productName\":\"toalha1\",\r\n    \"productUnitPrice\": 1.0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/management/api/store/products/search",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"management",
+										"api",
+										"store",
+										"products",
+										"search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createProduct",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"productName\" : \"name\",\r\n    \"productDescription\" : \"desc\",\r\n    \"productUnitPrice\" : 1.00,\r\n    \"productQuantity\" : 10,\r\n    \"productCreator\" : {\r\n        \"userLogin\" : \"login\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/management/api/store/products",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"management",
+										"api",
+										"store",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateProduct",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"productDescription\" : \"new description\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/management/api/store/products/id/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"management",
+										"api",
+										"store",
+										"products",
+										"id",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteProduct",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/management/api/store/products/id/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"management",
+										"api",
+										"store",
+										"products",
+										"id",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "orders",
+					"item": [
+						{
+							"name": "getAllOrders",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/management/api/store/orders",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"management",
+										"api",
+										"store",
+										"orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getOrderById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/management/api/store/orders/id/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"management",
+										"api",
+										"store",
+										"orders",
+										"id",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createOrder",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"orderedProducts\": [\r\n    {\r\n      \"productName\": \"toalha1\",      \r\n      \"productQuantity\": 1      \r\n    },\r\n    {\r\n      \"productName\": \"relogio1\",      \r\n      \"productQuantity\": 1      \r\n    },\r\n    {\r\n      \"productName\": \"computador1\",      \r\n      \"productQuantity\": 2      \r\n    }\r\n  ],\r\n  \"orderUser\" : {\r\n      \"userLogin\" : \"login\"\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/management/api/store/orders",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"management",
+										"api",
+										"store",
+										"orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateOrder",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"orderStatus\" : \"SHIPPED\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/management/api/store/orders/id/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"management",
+										"api",
+										"store",
+										"orders",
+										"id",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteOrderById",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/management/api/store/orders/id/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"management",
+										"api",
+										"store",
+										"orders",
+										"id",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "store",
+			"item": [
+				{
+					"name": "orders",
+					"item": [
+						{
+							"name": "getAllOrdersByOrdersUserLogin",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/store/orders/login/alfa",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"store",
+										"orders",
+										"login",
+										"alfa"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getOrderById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/store/orders/id/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"store",
+										"orders",
+										"id",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createOrder",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "password",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "user",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"orderedProducts\": [\r\n    {\r\n      \"productName\": \"toalha1\",      \r\n      \"productQuantity\": 1      \r\n    },\r\n    {\r\n      \"productName\": \"relogio1\",      \r\n      \"productQuantity\": 1      \r\n    },\r\n    {\r\n      \"productName\": \"computador1\",      \r\n      \"productQuantity\": 2      \r\n    }\r\n  ],\r\n  \"orderUser\" : {\r\n      \"userLogin\" : \"user2\"\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/store/orders",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"store",
+										"orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "cancelOrderByOrderId",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/store/orders/id/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"store",
+										"orders",
+										"id",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "products",
+					"item": [
+						{
+							"name": "getAllProducts",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/store/products",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"store",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findProductsByProductName",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "findAllProductsByFilter",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"productName\":\"toalha1\",\r\n    \"productUnitPrice\": 1.0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/store/products/search",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"store",
+										"products",
+										"search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getProductsByCategoryName",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfVVNFUiJ9XSwiaWF0IjoxNjQ5NjAyMjIxLCJleHAiOjE2NTA3NzI4MDB9.AEyI6ZylE3w5HS49bEZ9LM3vRhFGQvF3tJq1bx0SJ7WHhMAWKbn8bPIi6VQPOPZQOu0LzNENl1AGKaV8pY7w4A",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/store/products/category/pet",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"store",
+										"products",
+										"category",
+										"pet"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New Request",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6IlJPTEVfVVNFUiJ9XSwiaWF0IjoxNjQ5NjAyMjIxLCJleHAiOjE2NTA3NzI4MDB9.AEyI6ZylE3w5HS49bEZ9LM3vRhFGQvF3tJq1bx0SJ7WHhMAWKbn8bPIi6VQPOPZQOu0LzNENl1AGKaV8pY7w4A",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/store/products/category/pet/col",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"store",
+										"products",
+										"category",
+										"pet",
+										"col"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "users",
+					"item": [
+						{
+							"name": "getUserByUserLogin",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/store/users/login/login",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"store",
+										"users",
+										"login",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateRegularUser",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userPassword\" : \"newPassword\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/store/users/login/alfa",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"store",
+										"users",
+										"login",
+										"alfa"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteUserByUserLogin",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/api/store/users/login/login",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"store",
+										"users",
+										"login",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "open",
+			"item": [
+				{
+					"name": "users",
+					"item": [
+						{
+							"name": "createRegularUser",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userName\" : \"user2\",\r\n  \"userSurname\" : \"user2 surname\",\r\n  \"userLogin\" : \"user2\",\r\n  \"userPassword\" : \"password123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/open/users",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"open",
+										"users"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "jwt",
+			"item": [
+				{
+					"name": "getToken",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"user\",\r\n    \"password\" : \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllProductsUser",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "getAllUsersAdmin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJST0xFX0FETUlOIn1dLCJpYXQiOjE2NDk2MDE5NjUsImV4cCI6MTY1MDc3MjgwMH0.5uerM1_kkfVwN4Gn6KBR7WhtuRDMXo-iQg2yobDwumSbqumMX4IRPdYG7UJicORd1C8mJOGMhwfrYe3YTct8VQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/management/api/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"management",
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
