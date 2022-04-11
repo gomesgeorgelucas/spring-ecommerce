@@ -6,6 +6,11 @@ powered By: Infected Mushroom - Saeed ;)
 **GENERAL**
   - Only roles are used, no authorities at this point.
   - Filter uses Data JPA Specification
+  - Works with JWT
+  - Version with formLogin is implemented - check branch spring_security
+    - has custom login page using thymeleaf, custom logout button
+  - It has Open-API (Swagger)
+     
 
 **USER**
 
@@ -56,6 +61,7 @@ powered By: Infected Mushroom - Saeed ;)
 - [ ] Replace all answers and requests with DTOs
 - [ ] Thin controllers - remove duplicate method calls and fix antMatchers
 - [ ] Implement basic Service Layer Interface (GET,POST,PUT,DELETE)
+- [ ] Update postman collection to match endpoints and auth
 
 ### Extra-credit
 - [ ] implemente refresh token controller
