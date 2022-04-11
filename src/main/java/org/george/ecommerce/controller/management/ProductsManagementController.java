@@ -2,7 +2,6 @@ package org.george.ecommerce.controller.management;
 
 import lombok.AllArgsConstructor;
 import org.george.ecommerce.domain.model.ProductsModel;
-import org.george.ecommerce.domain.views.ProductCategoriesModelView;
 import org.george.ecommerce.service.ProductsServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,15 +40,16 @@ public class ProductsManagementController {
         return ResponseEntity.ok().body(productsService.getProductById(productId));
     }
 
-    //TODO - fix Query when Categories available
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/category")
-    public ResponseEntity<Page<ProductCategoriesModelView>> findProductsModelsByProductNameAndAndProductCategories(Pageable pageable){
-        return ResponseEntity.ok().body(productsService.findByProductAndCategory(pageable));
+    @GetMapping("/category/{categoryName}")
+    public ResponseEntity<?> getProductsByCategoryName(
+            @PathVariable("categoryName") String categoryName,
+            Pageable pageable) {
+        return ResponseEntity.ok().body(productsService.findAllByProductCategoriesIn(categoryName, pageable));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/search")
+    @GetMapping("/searchBy")
     public Page<ProductsModel> findAllProductsByFilter(
             @RequestBody
             @Valid ProductsModel productsModel,

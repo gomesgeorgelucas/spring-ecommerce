@@ -15,7 +15,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/store/users")
 public class UsersController {
-    final UsersServiceImpl usersService;
+    private final UsersServiceImpl usersService;
 
     @PreAuthorize("#userLogin == authentication.name or hasRole('ADMIN')")
     @GetMapping("/{userLogin}")

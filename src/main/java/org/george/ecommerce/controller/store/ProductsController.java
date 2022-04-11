@@ -37,19 +37,25 @@ public class ProductsController {
         return ResponseEntity.ok().body(productsService.findProductByProductName(productName));
     }
 
-//    //TODO - fix Query when Categories available
-//    @GetMapping("/byCategory/{categoryName}")
-//    public ResponseEntity<?>> findProductsModelsByProductNameAndAndProductCategories(Pageable pageable){
-//        return ResponseEntity.ok().body(productsService.findByProductAndCategory(pageable));
-//    }
-
     @GetMapping("/category/{categoryName}")
-    public ResponseEntity<?> getProductsByCategoryName(@PathVariable String categoryName, Pageable pageable) {
-        return ResponseEntity.ok().body(productsService.getProductsByCategoryName(categoryName, pageable));
+    public ResponseEntity<?> getProductsByCategoryName(
+            @PathVariable("categoryName") String categoryName,
+            Pageable pageable) {
+        return ResponseEntity.ok().body(productsService.findAllByProductCategoriesIn(categoryName, pageable));
+    }
+
+    @GetMapping("/category/{categoryName}/{productName}")
+    public ResponseEntity<?> findAllByProductCategoriesInAndProductNameContaining(
+            @PathVariable("categoryName") String categoryName,
+            @PathVariable("productName") String productName,
+            Pageable pageable) {
+        return ResponseEntity.ok().body(productsService.findAllByProductCategoriesInAndProductNameContaining(categoryName, productName, pageable));
     }
 
     @GetMapping("/searchBy")
     public Page<ProductsModel> findAllProductsByFilter(@Valid @RequestBody ProductsModel productsModel, Pageable pageable) {
         return productsService.getAllProductsByFilter(productsModel, pageable);
     }
+
+
 }

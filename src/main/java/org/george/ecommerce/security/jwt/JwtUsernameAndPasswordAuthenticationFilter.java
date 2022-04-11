@@ -70,7 +70,19 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                 //Needs really strong and long keys!
                 .signWith(secretKey)
                 .compact();
+        /*
+        Generate longer duration refresh token
+         */
+        String refreshToken = Jwts.builder()
+                .setSubject(authResult.getName())
+                .claim("authorities", authResult.getAuthorities())
+                .setIssuedAt(new Date())
+                .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusMonths(3L)))
+                //Needs really strong and long keys!
+                .signWith(secretKey)
+                .compact();
 
         response.addHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.tokenPrefix() + token);
+        response.addHeader("refresh_token", refreshToken);
     }
 }
